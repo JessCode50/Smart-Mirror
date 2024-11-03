@@ -1,1 +1,1 @@
-#SE 101 Final Project - Magic Mirror
+# SE 101 Final Project - Magic Mirror
