@@ -233,4 +233,5 @@ const Weather = async() => {
   )
 }
 
-export default Weather
+
+export default Weather()
