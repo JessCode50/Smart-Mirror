@@ -1,13 +1,20 @@
-const Weather = async () => {
+const Weather = async() => {
   let data = await fetch('https://api.open-meteo.com/v1/forecast?latitude=43.4668&longitude=-80.5164&current=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&hourly=temperature_2m,apparent_temperature,precipitation,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,uv_index_max&timezone=auto')
   let weatherInfo = await data.json()
-  
+  var temperature = weatherInfo.current.temperature_2m
+  var wind = weatherInfo.current.wind_speed_10m
+  var weatherDiscrip = weatherInfo.current.weather_code
+
+  if (weatherDiscrip = 3){
+    weatherDiscrip = "Partly Cloudy"
+  }
   return (
     <div>
       <h1 className="text-2xl">Weather</h1>
       <p>Current Weather:</p>
-      <p>Temperature: 33ºC</p>
-      <p>Wind: 21 km/h</p>
+      <p>Temperature: {temperature}ºC</p>
+      <p>Wind: {wind}km/h</p>
+      <p>Weather Description: {weatherDiscrip} </p>
       {/* <div className="px-8 ...">Morning: Afternoon:</div> */} 
       <p>Morning: Afternoon: Evening:</p>
       <p>Temperature: 13ºC Temperature: 25ºC Temperature: 0ºC</p>
@@ -16,4 +23,4 @@ const Weather = async () => {
 }
 
 
-export default Weather()
+export default Weather
