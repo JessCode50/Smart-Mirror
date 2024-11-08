@@ -14,7 +14,7 @@ const Clock: React.FC = () => {
   }, []);
 
   return (
-    <div style={{ fontSize: '2rem', textAlign: 'center', marginTop: '20px' }}>
+    <div style={{ fontSize: '5rem', textAlign: 'center', marginTop: '70px' }}>
       {time}
     </div>
   );
