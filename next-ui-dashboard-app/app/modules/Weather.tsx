@@ -2,112 +2,116 @@ const Weather = async() => {
   let data = await fetch('https://api.open-meteo.com/v1/forecast?latitude=43.4668&longitude=-80.5164&current=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&hourly=temperature_2m,apparent_temperature,precipitation,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,uv_index_max&timezone=auto')
   // Orlando: let data = await fetch('https://api.open-meteo.com/v1/forecast?latitude=28.5383&longitude=-81.3792&current=temperature_2m,weather_code,wind_speed_10m&daily=uv_index_max')
    // Costa Rica let data = await fetch('https://api.open-meteo.com/v1/forecast?latitude=10&longitude=-84&current=temperature_2m,weather_code')
+
   let weatherInfo = await data.json()
-  var temperature = Math.round(weatherInfo.current.temperature_2m)
-  var temperatureApparent = Math.round(weatherInfo.current.apparent_temperature)
-  var wind = Math.round(weatherInfo.current.wind_speed_10m)
-  var dailyHigh = Math.round(weatherInfo.daily.apparent_temperature_max[0])
-  var dailyLow = Math.round(weatherInfo.daily.apparent_temperature_min[0])
-  var UVindex = weatherInfo.daily.uv_index_max[0]
+  const temperature = Math.round(weatherInfo.current.temperature_2m)
+  const temperatureApparent = Math.round(weatherInfo.current.apparent_temperature)
+  const wind = Math.round(weatherInfo.current.wind_speed_10m)
+  const dailyHigh = Math.round(weatherInfo.daily.apparent_temperature_max[0])
+  const dailyLow = Math.round(weatherInfo.daily.apparent_temperature_min[0])
+  const UVindex: number = weatherInfo.daily.uv_index_max[0]
+
+  let UVString: string = ""
 
   if (UVindex >= 0 && UVindex < 3){
-    UVindex = "Low"
+    UVString = "Low"
   }
   else if (UVindex >= 3 && UVindex < 6){
-    UVindex = "Moderate"
+    UVString = "Moderate"
   }
   else if (UVindex >= 6 && UVindex < 8){
-    UVindex = "High"
+    UVString = "High"
   }
   else if (UVindex >= 8 && UVindex < 11){
-    UVindex = "Very High"
+    UVString = "Very High"
   }
   else {
-    UVindex = "Extreme"
+    UVString = "Extreme"
   }
 
 
-  var weatherDiscrip = weatherInfo.current.weather_code
+  const code: number =  weatherInfo.current.weather_code
+  let weatherDiscrip: string = ""
 
-  if (weatherDiscrip == 0){
+  if (code == 0){
     weatherDiscrip = "Clear Sky"
   }
-  else if (weatherDiscrip == 1){
+  else if (code == 1){
     weatherDiscrip = "Mainly Clear"
   }
-  else if (weatherDiscrip == 2){
+  else if (code == 2){
     weatherDiscrip = "Partly Cloudy"
   }
-  else if (weatherDiscrip == 3){
+  else if (code == 3){
     weatherDiscrip = "Overcast"
   }
-  else if (weatherDiscrip == 45 || weatherDiscrip == 48){
+  else if (code == 45 || code == 48){
     weatherDiscrip = "Fog"
   }
-  else if (weatherDiscrip == 51){
+  else if (code == 51){
     weatherDiscrip = "Light Drizzle"
   }
-  else if (weatherDiscrip == 53){
+  else if (code == 53){
     weatherDiscrip = "Moderate Drizzle"
   }
-  else if (weatherDiscrip == 55){
+  else if (code == 55){
     weatherDiscrip = "Intense Drizzle"
   }
-  else if (weatherDiscrip == 56){
+  else if (code == 56){
     weatherDiscrip = "Light Freezing Drizzle"
   }
-  else if (weatherDiscrip == 57){
+  else if (code == 57){
     weatherDiscrip = "Intense Freezing Drizzle"
   }
-  else if (weatherDiscrip == 61){
+  else if (code == 61){
     weatherDiscrip = "Light Rain"
   }
-  else if (weatherDiscrip == 63){
+  else if (code == 63){
     weatherDiscrip = "Moderate Rain"
   }
-  else if (weatherDiscrip == 65){
+  else if (code == 65){
     weatherDiscrip = "Heavy Rain"
   }
-  else if (weatherDiscrip == 66){
+  else if (code == 66){
     weatherDiscrip = "Light Freezing Rain"
   }
-  else if (weatherDiscrip == 67){
+  else if (code == 67){
     weatherDiscrip = "Heavy Freezing Rain"
   }
-  else if (weatherDiscrip == 71){
+  else if (code == 71){
     weatherDiscrip = "Light Snow Fall"
   }
-  else if (weatherDiscrip == 73){
+  else if (code == 73){
     weatherDiscrip = "Moderate Snow Fall"
   }
-  else if (weatherDiscrip == 75){
+  else if (code == 75){
     weatherDiscrip = "Heavy Snow Fall"
   }
-  else if (weatherDiscrip == 77){
+  else if (code == 77){
     weatherDiscrip = "Snow Grains"
   }
-  else if (weatherDiscrip == 80){
+  else if (code == 80){
     weatherDiscrip = "Light Rain Showers"
   }
-  else if (weatherDiscrip == 81){
+  else if (code == 81){
     weatherDiscrip = "Moderate Rain Showers"
   }
-  else if (weatherDiscrip == 82){
+  else if (code == 82){
     weatherDiscrip = "Heavy Rain Showers"
   }
-  else if (weatherDiscrip == 85){
+  else if (code == 85){
     weatherDiscrip = "Light Snow Showers"
   }
-  else if (weatherDiscrip == 86){
+  else if (code == 86){
     weatherDiscrip = "Heavy Snow Showers"
   }
-  else if (weatherDiscrip == 95){
+  else if (code == 95){
     weatherDiscrip = "Thunderstorms"
   }
-  else if (weatherDiscrip == 96){
+  else if (code == 96){
     weatherDiscrip = "Thunderstorms with Light Hail"
   }
-  else if (weatherDiscrip == 99){
+  else if (code == 99){
     weatherDiscrip = "Thunderstorms with Heavy Hail"
   }
   else {
@@ -123,7 +127,7 @@ const Weather = async() => {
       <p>Daily High: {dailyHigh}ºC</p>
       <p>Daily Low: {dailyLow}ºC</p>
       <p>Wind: {wind}km/h</p>
-      <p>UV Index: {UVindex}</p>
+      <p>UV Index: {UVString}</p>
       <p>Weather Description: {weatherDiscrip} </p>
     </div>
   )
