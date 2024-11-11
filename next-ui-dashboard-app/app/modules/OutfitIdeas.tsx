@@ -8,7 +8,7 @@ const OutfitIdeas = async () => {
   const aiQueryData = {
     weather: {
       temperature: "24",
-      unit: "celcius",
+      unit: "celsius",
       location: "Waterloo, ON, Canada",
       windSpeed: "24 km/h",
       humidex: "60",
