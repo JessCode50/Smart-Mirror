@@ -14,13 +14,16 @@ import { mdiWeatherSnowyHeavy } from '@mdi/js';
 import { mdiWeatherHail } from '@mdi/js';
 import { mdiWeatherLightning } from '@mdi/js';
 import { mdiWeatherLightningRainy } from '@mdi/js';
+import { mdiWeatherSunnyAlert } from '@mdi/js';
+import { mdiWeatherWindy } from '@mdi/js';
 
 
 const Weather = async() => {
   let data = await fetch('https://api.open-meteo.com/v1/forecast?latitude=43.4668&longitude=-80.5164&current=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&hourly=temperature_2m,apparent_temperature,precipitation,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,uv_index_max&timezone=auto')
   // Orlando let data = await fetch('https://api.open-meteo.com/v1/forecast?latitude=28.5383&longitude=-81.3792&current=temperature_2m,weather_code,wind_speed_10m&daily=uv_index_max')
    // Costa Rica let data = await fetch('https://api.open-meteo.com/v1/forecast?latitude=10&longitude=-84&current=temperature_2m,weather_code')
-   // Whitehorse let data = await fetch('https://api.open-meteo.com/v1/forecast?latitude=60.7161&longitude=-135.0538&current=temperature_2m,apparent_temperature,precipitation,rain,showers,snowfall,weather_code,wind_speed_10m&hourly=temperature_2m&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,uv_index_max')
+   // whitehorselet data = await fetch('https://api.open-meteo.com/v1/forecast?latitude=60.7161&longitude=-135.0538&current=temperature_2m,apparent_temperature,precipitation,rain,showers,snowfall,weather_code,wind_speed_10m&hourly=temperature_2m&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,uv_index_max')
+  // budapest let data = await fetch('https://api.open-meteo.com/v1/forecast?latitude=47.4984&longitude=19.0404&current=temperature_2m,apparent_temperature,precipitation,rain,showers,snowfall,weather_code,wind_speed_10m&hourly=temperature_2m&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,uv_index_max')
 
   let weatherInfo = await data.json()
   const temperature = Math.round(weatherInfo.current.temperature_2m)
@@ -168,30 +171,66 @@ const Weather = async() => {
 
   return (
     <div>
-      <Icon 
-        className="fill-current text-[#fcca56]" 
-        path={icon}
-        size={5} 
-      />
-      <div className="grid grid-rows-1 grid-flow-col gap-4">
-        <div>
-          Current Weather:
-          Temperature: {temperature}ºC
+      <div className="flex">
+        <div className="flex-none w-100">
+          <Icon 
+            // className="fill-current text-[#fcca56]" 
+            path={icon}
+            size={7} 
+          />
         </div>
-        <div>09</div>
+
+        <div className="pr-10"></div>
+
+        <div className="flex-none w-100">
+          <h1 className="text-7xl">{temperature}ºC</h1>
+          <h1 className="text-2xl">Feels Like {temperatureApparent}ºC</h1>
+          <h1 className="text-2xl">{weatherDiscrip} </h1>
+        </div>
+
+        <div className="pr-20"></div>
+        <div className="pr-5"></div>
+
+        <div className="flex-none">
+          <div className="mr-20">
+            <h1 className="text-2xl text-right">High: {dailyHigh}ºC</h1>
+            <h1 className="text-2xl text-right">Low: {dailyLow}ºC</h1>
+
+            <div className="flex">
+              <div className="flex-none w-50">
+                <Icon 
+                  path={mdiWeatherSunnyAlert}
+                  size={1.5} 
+                />
+              </div>
+
+              <div className="pr-3"></div>
+
+              <div className="flex-1">
+                <h1 className="text-2xl text-right">UV Index: {UVindex} ~ {UVString}</h1>
+              </div>
+            </div>
+
+            <div className="flex">
+            <div className="pr-10"></div>
+            <div className="pr-7"></div>
+              <div className="flex-none w-50">
+                <Icon 
+                  path={mdiWeatherWindy}
+                  size={1.5} 
+                />
+              </div>
+
+              <div className="flex-1">
+                <h1 className="text-2xl text-right">Wind: {wind}km/h</h1>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <h1 className="text-2xl">Weather</h1>
-      <p>Current Weather:</p>
-      <p>Temperature: {temperature}ºC</p>
-      <p>Feels Like: {temperatureApparent}ºC</p>
-      <p>Daily High: {dailyHigh}ºC</p>
-      <p>Daily Low: {dailyLow}ºC</p>
-      <p>Wind: {wind}km/h</p>
-      <p>UV Index: {UVString}</p>
-      <p>Weather Description: {weatherDiscrip} </p>
+      
     </div>
   )
 }
-
 
 export default Weather
