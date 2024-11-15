@@ -6,11 +6,15 @@ import Weather from "./modules/Weather"
 
 export default function Home() {
   return (
-    <div>
-      <Clock></Clock>
-      <News></News>
-      <OutfitIdeas></OutfitIdeas>
+    <div className = "pl-24">
       <Weather></Weather>
+      <News></News>
+      <div className = "flex justify-end pr-24">
+      <Clock></Clock>
+      </div>
+      
+      {/* <OutfitIdeas></OutfitIdeas> */}
+      
     </div>
   )
 }
