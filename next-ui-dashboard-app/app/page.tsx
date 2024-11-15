@@ -9,7 +9,7 @@ import PageRefreshTimer from "./PageRefreshTimer"
 export default function Home() {
   return (
     <div className="pl-24">
-      {/* <Weather></Weather> */}
+      <Weather></Weather>
       <News></News>
 
       <Suspense>
