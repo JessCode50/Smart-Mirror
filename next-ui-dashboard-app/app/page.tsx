@@ -7,13 +7,17 @@ import { Suspense } from "react"
 
 export default function Home() {
   return (
-    <div>
-      <Clock></Clock>
-      <News></News>
+    <div className = "pl-24">
       <Weather></Weather>
+      <News></News>
+
       <Suspense>
         <OutfitIdeas></OutfitIdeas>
       </Suspense>
+      <div className = "flex justify-end pr-24">
+      <Clock></Clock>
+      </div>
+      
     </div>
   )
 }
