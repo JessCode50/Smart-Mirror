@@ -1,21 +1,28 @@
 import OpenAI from "openai"
+import { fetchWeather } from "../lib/fetchWeather"
+import { WeatherData } from "../lib/weatherData"
 
- const OutfitIdeas = async () => {
+const OutfitIdeas = async () => {
   const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
+    apiKey: process.env.OPENAI_API_KEY
   })
-
-  const aiQueryData = {
-    weather: {
-      temperature: "24",
-      unit: "celsius",
-      location: "Waterloo, ON, Canada",
-      windSpeed: "24 km/h",
-      humidex: "60",
-    },
-    gender: "Unisex",
-    style: "Streetwear",
+  let aiQueryData: {
+    weather: WeatherData | "No Data"
+    genderStyle: "Men" | "Women" | "Unisex"
+    style: string
+  } = {
+    weather: "No Data",
+    genderStyle: "Unisex",
+    style: "Streetwear"
   }
+
+  try {
+    aiQueryData.weather = await fetchWeather()
+  } catch {
+    aiQueryData.weather = "No Data"
+  }
+
+  console.log(aiQueryData)
 
   const completion = await openai.chat.completions.create({
     model: "gpt-4o-mini",
@@ -26,17 +33,17 @@ import OpenAI from "openai"
         deas based on parameters specified in the user prompt. Those parameters may include things such as weather, 
         preferred styles, gender / unisex and will be provided as a JSON object of strings. 
         Provide exactly three ideas that are appropriate for the conditions provided only in an array of strings, 
-        in JSON without any formatting.`,
+        in JSON without any formatting.`
       },
       {
         role: "user",
-        content: JSON.stringify(aiQueryData),
-      },
-    ],
+        content: JSON.stringify(aiQueryData)
+      }
+    ]
   })
 
   const result: Array<string> | null = JSON.parse(
-    completion.choices[0].message.content || "null",
+    completion.choices[0].message.content || "null"
   )
   return result ? (
     <div className="m-4 p-2">
