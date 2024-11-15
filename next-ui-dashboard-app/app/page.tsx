@@ -9,11 +9,12 @@ export default function Home() {
     <div className = "pl-24">
       <Weather></Weather>
       <News></News>
+      <OutfitIdeas></OutfitIdeas>
+
       <div className = "flex justify-end pr-24">
       <Clock></Clock>
       </div>
       
-      {/* <OutfitIdeas></OutfitIdeas> */}
       
     </div>
   )
