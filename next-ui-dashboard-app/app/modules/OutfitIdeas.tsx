@@ -7,17 +7,26 @@ const OutfitIdeas = async () => {
     apiKey: process.env.OPENAI_API_KEY
   })
   let aiQueryData: {
-    weather: WeatherData | "No Data"
+    weather:
+      | { weatherData: WeatherData | "No Data"; weatherEventDesc: string }
+      | "No Data"
     genderStyle: "Men" | "Women" | "Unisex"
     style: string
   } = {
     weather: "No Data",
-    genderStyle: "Unisex",
-    style: "Streetwear"
+    genderStyle: "Women",
+    style: "Business Casual"
   }
+  let currWeather: WeatherData | undefined = undefined
 
   try {
-    aiQueryData.weather = await fetchWeather()
+    currWeather = await fetchWeather()
+    if (currWeather != undefined) {
+      aiQueryData.weather = {
+        weatherData: currWeather,
+        weatherEventDesc: currWeather.getWeatherEvent().desc
+      }
+    }
   } catch {
     aiQueryData.weather = "No Data"
   }

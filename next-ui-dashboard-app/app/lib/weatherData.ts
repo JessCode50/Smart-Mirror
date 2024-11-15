@@ -87,7 +87,7 @@ export class WeatherData {
     this.wind = wind
     this.weatherEventCode = weatherEventCode
   }
-  getWeatherEvent(): WeatherEvent {
+  public getWeatherEvent(): WeatherEvent {
     return (
       WeatherData.weatherEventMap[this.weatherEventCode] || {
         desc: "No Data",
