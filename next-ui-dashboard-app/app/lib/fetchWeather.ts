@@ -29,4 +29,5 @@ export async function fetchWeather(): Promise<WeatherData> {
     wind,
     code
   )
+  //
 }
