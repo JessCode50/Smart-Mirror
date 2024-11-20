@@ -12,14 +12,19 @@ const News = async () => {
   } = await data.json()
 
   return (
-    <div className="grid grid-cols-1 gap-4 max-w-80">
-      {articles.results.map((article: ArticleInfo, i: number) => (
-        <article key={i} className="text-wrap">
-          <h6 className="text-s">{article.source_name}</h6>
-          <h1 className="text-xl font-bold">{article.title}</h1>
-          <br></br>
-        </article>
-      ))}
+    <div>
+      <div className="grid grid-cols-1 gap-4 max-w-80">
+        <div className="flex justify-center">
+          <h1 className="text-4xl font-bold mb-3">NEWS</h1>
+        </div>
+        {articles.results.map((article: ArticleInfo, i: number) => (
+          <article key={i} className="text-wrap">
+            <h6 className="text-s">{article.source_name}</h6>
+            <h1 className="text-xl font-bold">{article.title}</h1>
+            <br></br>
+          </article>
+        ))}
+      </div>
     </div>
   )
 }

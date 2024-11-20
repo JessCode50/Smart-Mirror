@@ -55,11 +55,17 @@ const OutfitIdeas = async () => {
     completion.choices[0].message.content || "null"
   )
   return result ? (
-    <div className="m-4 p-2">
-      <h1 className=" text-xl ">Outfit Ideas</h1>
-      <li>{result[0] || ""}</li>
-      <li>{result[1] || ""}</li>
-      <li>{result[2] || ""}</li>
+    <div className="max-w-80">
+      <div className="grid grid-cols-1 gap-4 max-w-80">
+          <div className="flex justify-center">
+          <h1 className="text-4xl font-bold mb-5">OUTFIT IDEAS</h1>
+          </div>
+      </div>
+      <ul className="list-disc space-y-4">
+        <li className = "text-lg">{result[0] || ""}</li>
+        <li className = "text-lg">{result[1] || ""}</li>
+        <li className = "text-lg">{result[2] || ""}</li>
+      </ul>
     </div>
   ) : (
     <div></div>
