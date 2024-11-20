@@ -1,32 +1,29 @@
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
+import { getSpotifyAccessToken } from "@/app/lib/spotifyToken"
 import {
-  checkSpotifyTokenExpired,
-  getSpotifyAccessToken,
-  SpotifyTokenStore
-} from "@/app/lib/spotifyToken"
-
+  SpotifyTokenStore,
+  checkSpotifyTokenExpired
+} from "@/app/lib/spotifyDataTypes"
 import Image from "next/image"
 import Icon from "@mdi/react"
 import { mdiSpotify } from "@mdi/js"
 
 const SpotifyNowPlaying = async () => {
   const cookieStore = await cookies()
-  const spotifyStoreJSON = cookieStore.get("spotifyToken")?.value
+  let spotifyStoreJSON = cookieStore.get("spotifyToken")?.value
 
   if (!spotifyStoreJSON) return <div>Spotify account not setup...</div>
   let spotifyStore: SpotifyTokenStore = JSON.parse(spotifyStoreJSON)
 
   // Check token expiry
   if (checkSpotifyTokenExpired(spotifyStore)) {
-    spotifyStore = await getSpotifyAccessToken(spotifyStore)
-    cookieStore.set("spotifyToken", JSON.stringify(spotifyStore), {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-      expires: Date.now() + 90 * 24 * 60 * 60 * 1000
-    })
+    redirect("/spotify_login")
   }
+
+  const testFetch = await fetch("http://localhost:3000/spotify_login/test", {
+    credentials: "same-origin"
+  })
   // Make request to spotify API
   const currentlyPlayingReq = await fetch(
     "https://api.spotify.com/v1/me/player/currently-playing",
@@ -36,6 +33,8 @@ const SpotifyNowPlaying = async () => {
       }
     }
   )
+  if (currentlyPlayingReq.status == 204)
+    return <h1>Nothing Playing on Spotify...</h1>
   const songData = await currentlyPlayingReq.json()
   if (songData.item === null || songData.item === undefined) {
     return <h1>Nothing Playing on Spotify...</h1>

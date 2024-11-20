@@ -1,29 +1,17 @@
+"use server"
 import { cookies } from "next/headers"
+import {
+  SpotifyTokenStore,
+  SpotifyAccessToken,
+  checkSpotifyTokenExpired
+} from "./spotifyDataTypes"
 
 const client_id = "ff8ff81c736941439e5a5ea1a89ffdea"
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET
 
-export interface SpotifyAccessToken {
-  access_token: string
-  token_type: "Bearer"
-  expires_in: number
-  refresh_token?: string
-  scope: string
-}
-export interface SpotifyTokenStore {
-  expires: number
-  token: SpotifyAccessToken
-  refresh_token: string
-}
-
-export function checkSpotifyTokenExpired(
-  tokenObject: SpotifyTokenStore
-): boolean {
-  return tokenObject.expires < Date.now()
-}
 export async function getSpotifyAccessToken(
   spotifyTokenStore: SpotifyTokenStore
-): Promise<SpotifyTokenStore> {
+) {
   if (!checkSpotifyTokenExpired(spotifyTokenStore)) return spotifyTokenStore
   if (!spotifyTokenStore.refresh_token)
     throw new Error("No Refresh Token, redirect to login...")
@@ -44,11 +32,18 @@ export async function getSpotifyAccessToken(
   } catch (e) {
     throw e
   }
-  return {
+  const cookieStore = await cookies()
+  const spotifyStore = {
     refresh_token: accessToken.refresh_token || spotifyTokenStore.refresh_token,
     token: accessToken,
     expires: Date.now() + accessToken.expires_in * 1000
   }
+  cookieStore.set("spotifyToken", JSON.stringify(spotifyStore), {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+    expires: Date.now() + 90 * 24 * 60 * 60 * 1000
+  })
 }
 
 // TODO: Eventually the token should be stored in a database

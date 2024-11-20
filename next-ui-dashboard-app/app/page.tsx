@@ -6,6 +6,8 @@ import { Suspense } from "react"
 import PageRefreshTimer from "./PageRefreshTimer"
 import Photos from "./modules/Photos"
 import SpotifyNowPlaying from "./modules/SpotifyNowPlaying"
+import SpotifyTop from "./modules/SpotifyTop"
+import Loading from "./loading"
 
 export default function Home() {
   return (
@@ -15,12 +17,14 @@ export default function Home() {
       </div>
       <div className="mb-20">
         <News></News>
+        <Suspense>
+          <SpotifyNowPlaying></SpotifyNowPlaying>
+          <SpotifyTop></SpotifyTop>
+        </Suspense>
+        <Suspense>
+          <OutfitIdeas></OutfitIdeas>
+        </Suspense>
       </div>
-
-      <Suspense>
-        <OutfitIdeas></OutfitIdeas>
-      </Suspense>
-
       <div className="flex-grow"></div>
       <div className="flex justify-end pr-24 pb-10">
         <Clock></Clock>

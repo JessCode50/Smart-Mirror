@@ -17,8 +17,8 @@ export async function GET(request: Request) {
   const cookieStore = await cookies()
   cookieStore.set("state", state, {
     secure: true,
-    sameSite: "strict",
-    httpOnly: true
+    httpOnly: true,
+    sameSite: "lax"
   })
   redirect(
     `https://accounts.spotify.com/authorize?response_type=code&client_id=${client_id}&scope=${scope}&redirect_uri=http://localhost:3000/spotify_login/callback&state=${state}`

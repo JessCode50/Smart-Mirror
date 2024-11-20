@@ -1,6 +1,9 @@
 import { cookies } from "next/headers"
 import { NextRequest } from "next/server"
-import { SpotifyAccessToken, SpotifyTokenStore } from "@/app/lib/spotifyToken"
+import {
+  SpotifyAccessToken,
+  SpotifyTokenStore
+} from "@/app/lib/spotifyDataTypes"
 
 const client_id = "ff8ff81c736941439e5a5ea1a89ffdea"
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET
@@ -12,6 +15,8 @@ export async function GET(request: NextRequest) {
 
   const cookieStore = await cookies()
   const storedState = cookieStore.get("state")?.value
+  console.log(storedState)
+  console.log(returnedState)
   if (
     storedState === undefined ||
     returnedState === null ||
