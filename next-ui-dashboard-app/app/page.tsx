@@ -5,6 +5,7 @@ import Weather from "./modules/Weather"
 import { Suspense } from "react"
 import PageRefreshTimer from "./PageRefreshTimer"
 import Photos from "./modules/Photos"
+import SpotifyNowPlaying from "./modules/SpotifyNowPlaying"
 
 export default function Home() {
   return (
