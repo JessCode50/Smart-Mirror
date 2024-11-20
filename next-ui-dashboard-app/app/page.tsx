@@ -1,4 +1,3 @@
-import Image from "next/image"
 import Clock from "./modules/Clock"
 import News from "./modules/News"
 import OutfitIdeas from "./modules/OutfitIdeas"

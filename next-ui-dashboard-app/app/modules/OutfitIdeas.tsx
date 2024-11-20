@@ -6,7 +6,7 @@ const OutfitIdeas = async () => {
   const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
   })
-  let aiQueryData: {
+  const aiQueryData: {
     weather:
       | { weatherData: WeatherData | "No Data"; weatherEventDesc: string }
       | "No Data"

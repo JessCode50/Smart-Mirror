@@ -9,7 +9,7 @@ const Weather = async () => {
 
   try {
     currWeather = await fetchWeather()
-  } catch (e) {
+  } catch {
     currWeather = null
   }
 
