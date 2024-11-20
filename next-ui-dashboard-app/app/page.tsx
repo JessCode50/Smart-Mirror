@@ -4,6 +4,7 @@ import OutfitIdeas from "./modules/OutfitIdeas"
 import Weather from "./modules/Weather"
 import { Suspense } from "react"
 import PageRefreshTimer from "./PageRefreshTimer"
+import Photos from "./modules/Photos"
 
 export default function Home() {
   return (
