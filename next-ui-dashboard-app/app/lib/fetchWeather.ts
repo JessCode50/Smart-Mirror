@@ -18,14 +18,15 @@ export async function fetchWeather(): Promise<WeatherData> {
   const dailyHigh = Math.round(weatherInfo.daily.apparent_temperature_max[0])
   const dailyLow = Math.round(weatherInfo.daily.apparent_temperature_min[0])
   const UVindex: number = weatherInfo.daily.uv_index_max[0]
+  console.log(UVindex)
   const code: number = weatherInfo.current.weather_code
   return new WeatherData(
     temperature,
     temperatureApparent,
-    wind,
     dailyHigh,
     dailyLow,
     UVindex,
+    wind,
     code
   )
 }
