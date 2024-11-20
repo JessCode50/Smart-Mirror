@@ -9,10 +9,10 @@ import PageRefreshTimer from "./PageRefreshTimer"
 export default function Home() {
   return (
     <div className="pl-24">
-      <Weather></Weather>
-      <News></News>
-
       <Suspense>
+        <Weather></Weather>
+        <News></News>
+
         <OutfitIdeas></OutfitIdeas>
       </Suspense>
       <div className="flex justify-end pr-24">

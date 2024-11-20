@@ -1,12 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Amarante&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Amarante&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,5 +19,5 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: 'Amarante', Arial, Helvetica, sans-serif;
+  font-family: "Amarante", Arial, Helvetica, sans-serif;
 }
