@@ -7,7 +7,7 @@ import PageRefreshTimer from "./PageRefreshTimer"
 
 export default function Home() {
   return (
-    <div className="pl-24">
+    <main className="pl-24">
       <Suspense>
         <Weather></Weather>
         <News></News>
@@ -18,6 +18,6 @@ export default function Home() {
         <Clock></Clock>
       </div>
       <PageRefreshTimer></PageRefreshTimer>
-    </div>
+    </main>
   )
 }
