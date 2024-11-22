@@ -12,7 +12,7 @@ export default function Home() {
       <Suspense>
         <Weather></Weather>
         <News></News>
-
+        <Photos></Photos>
         <OutfitIdeas></OutfitIdeas>
       </Suspense>
       <div className="flex justify-end pr-24">
