@@ -4,6 +4,7 @@ import {
   SpotifyAccessToken,
   SpotifyTokenStore
 } from "@/app/lib/spotifyDataTypes"
+import { redirect } from "next/navigation"
 
 const client_id = "ff8ff81c736941439e5a5ea1a89ffdea"
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET
@@ -54,6 +55,6 @@ export async function GET(request: NextRequest) {
     expires: Date.now() + 90 * 24 * 60 * 60 * 1000
   })
 
-  return new Response("Token received")
+  redirect("/")
   // query is "hello" for /api/search?query=hello
 }

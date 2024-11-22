@@ -1,10 +1,10 @@
 import { cookies } from "next/headers"
-import { getSpotifyAccessToken } from "../lib/spotifyToken"
 import {
   SpotifyTokenStore,
   checkSpotifyTokenExpired
 } from "@/app/lib/spotifyDataTypes"
 import { redirect } from "next/navigation"
+import { Track } from "@spotify/web-api-ts-sdk"
 
 const SpotifyTop = async () => {
   const cookieStore = await cookies()
@@ -28,13 +28,13 @@ const SpotifyTop = async () => {
     }
   )
   if (topTracksReq.status == 204) return <h1>Nothing Playing on Spotify...</h1>
-  const topTracks: any = (await topTracksReq.json()).items
+  const topTracks: Track[] = (await topTracksReq.json()).items
 
   return (
     <div className="flex flex-col gap-1 my-5 max-w-96">
       <h1 className="text-xl">Recent Favourites:</h1>
       <div className="grid grid-cols-2 gap-2">
-        {topTracks.map((track: any, i: number) => {
+        {topTracks.map((track: Track, i: number) => {
           return (
             <div key={i}>
               <h2>{track.name}</h2>
