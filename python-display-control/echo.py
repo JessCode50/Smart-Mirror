@@ -2,8 +2,8 @@ import RPi.GPIO as GPIO
 import time
 import subprocess
 
-TRIG = 12
-ECHO = 16
+TRIG_PIN = 12
+ECHO_PIN = 16
 
 TRIG_WIDTH_S = 0.00001
 SOUND_SPEED_M_S = 343
@@ -16,17 +16,17 @@ TURN_DISPLAY_OFF_SCRIPT = "/home/pi/mirror/scripts/turn-off.bash"
 
 def trigger():
   # Send trigger
-  GPIO.output(TRIG, GPIO.HIGH)
+  GPIO.output(TRIG_PIN, GPIO.HIGH)
   time.sleep(TRIG_WIDTH_S)
-  GPIO.output(TRIG, GPIO.LOW)
+  GPIO.output(TRIG_PIN, GPIO.LOW)
 
   # Read echo
   start_time = time.time()
-  while GPIO.input(ECHO) == GPIO.LOW:
+  while GPIO.input(ECHO_PIN) == GPIO.LOW:
     start_time = time.time()
 
   end_time = time.time()
-  while GPIO.input(ECHO) == GPIO.HIGH:
+  while GPIO.input(ECHO_PIN) == GPIO.HIGH:
     end_time = time.time()
 
   echo_duration = end_time - start_time
@@ -37,10 +37,10 @@ def trigger():
 
 def main():
   GPIO.setmode(GPIO.BOARD)
-  GPIO.setup(TRIG, GPIO.OUT)
-  GPIO.setup(ECHO, GPIO.IN)
+  GPIO.setup(TRIG_PIN, GPIO.OUT)
+  GPIO.setup(ECHO_PIN, GPIO.IN)
 
-  GPIO.output(TRIG, GPIO.LOW)
+  GPIO.output(TRIG_PIN, GPIO.LOW)
   time.sleep(2)
 
   # Loop
