@@ -4,6 +4,7 @@ import OutfitIdeas from "./modules/OutfitIdeas"
 import Weather from "./modules/Weather"
 import { Suspense } from "react"
 import PageRefreshTimer from "./PageRefreshTimer"
+import Photos from "./modules/Photos"
 
 export default function Home() {
   return (
@@ -11,7 +12,7 @@ export default function Home() {
       <Suspense>
         <Weather></Weather>
         <News></News>
-
+        <Photos></Photos>
         <OutfitIdeas></OutfitIdeas>
       </Suspense>
       <div className="flex justify-end pr-24">
