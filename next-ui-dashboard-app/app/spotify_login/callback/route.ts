@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
   }
 
   const accessTokenReq = await fetch(
-    `https://accounts.spotify.com/api/token?code=${authCode}&redirect_uri=http://localhost:3000/spotify_login/callback&grant_type=authorization_code`,
+    `https://accounts.spotify.com/api/token?code=${authCode}&redirect_uri=${request.url}&grant_type=authorization_code`,
     {
       method: "POST",
       headers: {

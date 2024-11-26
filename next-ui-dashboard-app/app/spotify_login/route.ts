@@ -10,7 +10,7 @@ function generateRandomString(length: number) {
 }
 
 const client_id = "ff8ff81c736941439e5a5ea1a89ffdea"
-export async function GET() {
+export async function GET(request: Request) {
   const state = generateRandomString(16)
   const scope =
     "user-read-currently-playing user-top-read user-read-private user-read-email"
@@ -21,6 +21,6 @@ export async function GET() {
     sameSite: "lax"
   })
   redirect(
-    `https://accounts.spotify.com/authorize?response_type=code&client_id=${client_id}&scope=${scope}&redirect_uri=http://localhost:3000/spotify_login/callback&state=${state}`
+    `https://accounts.spotify.com/authorize?response_type=code&client_id=${client_id}&scope=${scope}&redirect_uri=${request.url}/callback&state=${state}`
   )
 }
