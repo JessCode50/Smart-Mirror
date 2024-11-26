@@ -7,7 +7,6 @@ import PageRefreshTimer from "./PageRefreshTimer"
 import Photos from "./modules/Photos"
 import SpotifyNowPlaying from "./modules/SpotifyNowPlaying"
 import SpotifyTop from "./modules/SpotifyTop"
-import Loading from "./loading"
 
 export default function Home() {
   return (

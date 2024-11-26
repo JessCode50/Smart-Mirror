@@ -1,6 +1,5 @@
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
-import { getSpotifyAccessToken } from "@/app/lib/spotifyToken"
 import {
   SpotifyTokenStore,
   checkSpotifyTokenExpired
@@ -13,10 +12,10 @@ const NO_RESULTS_HTTP_CODE = 204
 
 const SpotifyNowPlaying = async () => {
   const cookieStore = await cookies()
-  let spotifyStoreJSON = cookieStore.get("spotifyToken")?.value
+  const spotifyStoreJSON = cookieStore.get("spotifyToken")?.value
 
   if (!spotifyStoreJSON) return <div>Spotify account not setup...</div>
-  let spotifyStore: SpotifyTokenStore = JSON.parse(spotifyStoreJSON)
+  const spotifyStore: SpotifyTokenStore = JSON.parse(spotifyStoreJSON)
 
   // Check token expiry
   if (checkSpotifyTokenExpired(spotifyStore)) {

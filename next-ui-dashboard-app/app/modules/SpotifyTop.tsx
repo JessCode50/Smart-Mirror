@@ -11,7 +11,7 @@ const SpotifyTop = async () => {
   const spotifyStoreJSON = cookieStore.get("spotifyToken")?.value
 
   if (!spotifyStoreJSON) return <div>Spotify account not setup...</div>
-  let spotifyStore: SpotifyTokenStore = JSON.parse(spotifyStoreJSON)
+  const spotifyStore: SpotifyTokenStore = JSON.parse(spotifyStoreJSON)
 
   // Check token expiry
   if (checkSpotifyTokenExpired(spotifyStore)) {
