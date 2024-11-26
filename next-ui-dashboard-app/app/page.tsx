@@ -17,6 +17,7 @@ export default function Home() {
       </div>
       <div className="mb-20">
         <News></News>
+        <Photos></Photos>
         <Suspense>
           <SpotifyNowPlaying></SpotifyNowPlaying>
           <SpotifyTop></SpotifyTop>
