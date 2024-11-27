@@ -28,9 +28,9 @@ export async function GET(request: NextRequest) {
   if (authCode == null || client_secret == undefined) {
     return new Response("ERROR: No auth code received!")
   }
-
+  console.log(request.nextUrl.protocol + "//" + request.nextUrl.host)
   const accessTokenReq = await fetch(
-    `https://accounts.spotify.com/api/token?code=${authCode}&redirect_uri=${request.url}&grant_type=authorization_code`,
+    `https://accounts.spotify.com/api/token?code=${authCode}&redirect_uri=${request.nextUrl.protocol + "//" + request.nextUrl.host}/spotify_login/callback&grant_type=authorization_code`,
     {
       method: "POST",
       headers: {

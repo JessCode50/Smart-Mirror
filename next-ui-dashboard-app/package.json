@@ -12,6 +12,7 @@
     "@mdi/js": "^7.4.47",
     "@mdi/react": "^1.6.1",
     "@spotify/web-api-ts-sdk": "^1.2.0",
+    "mongodb": "6.11",
     "next": "15.0.2",
     "openai": "^4.70.2",
     "react": "19.0.0-rc-02c0e824-20241028",
