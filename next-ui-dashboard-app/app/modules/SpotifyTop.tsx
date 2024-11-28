@@ -31,7 +31,7 @@ const SpotifyTop = async () => {
   const topTracks: Track[] = (await topTracksReq.json()).items
 
   return (
-    <div className="flex flex-col gap-1 my-5 max-w-96">
+    <div className="flex flex-col gap-1 my-5 max-w-80">
       <h1 className="text-xl">Recent Favourites:</h1>
       <div className="grid grid-cols-2 gap-2">
         {topTracks.map((track: Track, i: number) => {
