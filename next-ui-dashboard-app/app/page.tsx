@@ -13,6 +13,7 @@ export default function Home() {
 
       <div className = "flex justify-end pr-24">
       <Clock></Clock>
+      <Date></Date>
       </div>
       
       
