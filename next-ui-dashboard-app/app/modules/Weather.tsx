@@ -39,7 +39,7 @@ const Weather = async () => {
         </div>
 
         <div className="flex-grow"></div>
-        <div className="flex-justify-end pr-24">
+        <div className="flex-justify-end pr-2">
           <div className="mb-2">
             <h1 className="text-2xl text-right">
               High: {currWeather.dailyHigh}ºC

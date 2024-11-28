@@ -51,7 +51,7 @@ const SpotifyNowPlaying = async () => {
         ) : (
           ""
         )}
-        <div className="flex flex-col">
+        <div className="flex flex-col max-w-60">
           <Icon path={mdiSpotify} size={1.5}></Icon>
           <h2 className="text-xl">{songData.item.name}</h2>
           <h3 className="text-lg">{songData.item.artists[0].name}</h3>
