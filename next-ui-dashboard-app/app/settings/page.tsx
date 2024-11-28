@@ -17,13 +17,13 @@ export default function settings() {
   }
   
   return (
-    <div>
+    <div className = "bg-white text-black">
       <form method="post" onSubmit={handleSubmit}>
         Please modify the settings as you wish, then press "save".<br></br>
-        <button type="submit" className="border-solid border-black border-2">Save Settings</button>
+        <button type="submit" className="border-solid border-black border-2 text-black"> Save Settings </button>
         <br></br><br></br>
     
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-4 text-black">
       
           <div><h1 className="text-2xl">NEWS SETTINGS</h1><br></br>
         
