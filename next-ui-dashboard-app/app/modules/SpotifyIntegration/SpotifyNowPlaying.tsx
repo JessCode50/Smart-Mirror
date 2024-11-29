@@ -8,14 +8,16 @@ import Image from "next/image"
 import Icon from "@mdi/react"
 import { mdiSpotify } from "@mdi/js"
 import { Track } from "@spotify/web-api-ts-sdk"
+import { getMirrorSettings } from "../../stores/settingsClient"
+import { MirrorSettings } from "../../lib/dbAccess"
 const NO_RESULTS_HTTP_CODE = 204
 
-const SpotifyNowPlaying = async () => {
-  const cookieStore = await cookies()
-  const spotifyStoreJSON = cookieStore.get("spotifyToken")?.value
-
-  if (!spotifyStoreJSON) return <div>Spotify account not setup...</div>
-  const spotifyStore: SpotifyTokenStore = JSON.parse(spotifyStoreJSON)
+const SpotifyNowPlaying = async ({
+  spotifyStore
+}: {
+  spotifyStore: SpotifyTokenStore | undefined
+}) => {
+  if (spotifyStore === undefined) return <div>Spotify account not setup...</div>
 
   // Check token expiry
   if (checkSpotifyTokenExpired(spotifyStore)) {

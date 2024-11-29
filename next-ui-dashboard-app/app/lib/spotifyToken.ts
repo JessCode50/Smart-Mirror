@@ -5,11 +5,12 @@ import {
   SpotifyAccessToken,
   checkSpotifyTokenExpired
 } from "./spotifyDataTypes"
+import { updateSpotifyAccessToken } from "../stores/settingsClient"
 
 const client_id = "ff8ff81c736941439e5a5ea1a89ffdea"
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET
 
-export async function getSpotifyAccessToken(
+export async function requestFromRefreshToken(
   spotifyTokenStore: SpotifyTokenStore
 ) {
   if (!checkSpotifyTokenExpired(spotifyTokenStore)) return spotifyTokenStore
@@ -28,22 +29,17 @@ export async function getSpotifyAccessToken(
   )
   let accessToken: SpotifyAccessToken
   try {
+    console.log(accessTokenReq.body)
     accessToken = await accessTokenReq.json()
   } catch (e) {
     throw e
   }
-  const cookieStore = await cookies()
   const spotifyStore = {
     refresh_token: accessToken.refresh_token || spotifyTokenStore.refresh_token,
     token: accessToken,
     expires: Date.now() + accessToken.expires_in * 1000
   }
-  cookieStore.set("spotifyToken", JSON.stringify(spotifyStore), {
-    httpOnly: true,
-    secure: true,
-    sameSite: "strict",
-    expires: Date.now() + 90 * 24 * 60 * 60 * 1000
-  })
+  await updateSpotifyAccessToken(spotifyStore)
 }
 
 // TODO: Eventually the token should be stored in a database

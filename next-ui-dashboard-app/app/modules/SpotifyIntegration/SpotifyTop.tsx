@@ -5,13 +5,15 @@ import {
 } from "@/app/lib/spotifyDataTypes"
 import { redirect } from "next/navigation"
 import { Track } from "@spotify/web-api-ts-sdk"
+import { MirrorSettings } from "../../lib/dbAccess"
+import { getMirrorSettings } from "../../stores/settingsClient"
 
-const SpotifyTop = async () => {
-  const cookieStore = await cookies()
-  const spotifyStoreJSON = cookieStore.get("spotifyToken")?.value
-
-  if (!spotifyStoreJSON) return <div>Spotify account not setup...</div>
-  const spotifyStore: SpotifyTokenStore = JSON.parse(spotifyStoreJSON)
+const SpotifyTop = async ({
+  spotifyStore
+}: {
+  spotifyStore: SpotifyTokenStore | undefined
+}) => {
+  if (spotifyStore === undefined) return <div>Spotify account not setup...</div>
 
   // Check token expiry
   if (checkSpotifyTokenExpired(spotifyStore)) {
