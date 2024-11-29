@@ -1,4 +1,4 @@
-import { MongoClient, ServerApiVersion, Filter, ObjectId } from "mongodb"
+import { MongoClient, ServerApiVersion, ObjectId } from "mongodb"
 import { SpotifyTokenStore } from "./spotifyDataTypes"
 
 const CONNECTION_STRING = process.env.MONGODB_CONNECTION_STRING

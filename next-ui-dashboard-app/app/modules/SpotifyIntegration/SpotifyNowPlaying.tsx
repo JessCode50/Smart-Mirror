@@ -1,4 +1,3 @@
-import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import {
   SpotifyTokenStore,
@@ -8,8 +7,6 @@ import Image from "next/image"
 import Icon from "@mdi/react"
 import { mdiSpotify } from "@mdi/js"
 import { Track } from "@spotify/web-api-ts-sdk"
-import { getMirrorSettings } from "../../stores/settingsClient"
-import { MirrorSettings } from "../../lib/dbAccess"
 const NO_RESULTS_HTTP_CODE = 204
 
 const SpotifyNowPlaying = async ({

@@ -6,8 +6,8 @@ import {
   DEFAULT_SETTINGS,
   setMirrorSettings
 } from "../stores/settingsClient"
-import Icon from "@mdi/react"
-import { mdiSpotify } from "@mdi/js"
+// import Icon from "@mdi/react"
+// import { mdiSpotify } from "@mdi/js"
 
 export default async function settings() {
   function handleSubmit(e: FormEvent<HTMLFormElement>) {

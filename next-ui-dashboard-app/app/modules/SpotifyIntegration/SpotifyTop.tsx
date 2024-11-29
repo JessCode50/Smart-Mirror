@@ -1,12 +1,9 @@
-import { cookies } from "next/headers"
 import {
   SpotifyTokenStore,
   checkSpotifyTokenExpired
 } from "@/app/lib/spotifyDataTypes"
 import { redirect } from "next/navigation"
 import { Track } from "@spotify/web-api-ts-sdk"
-import { MirrorSettings } from "../../lib/dbAccess"
-import { getMirrorSettings } from "../../stores/settingsClient"
 
 const SpotifyTop = async ({
   spotifyStore
