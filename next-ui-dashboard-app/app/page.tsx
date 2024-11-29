@@ -1,4 +1,3 @@
-import Image from "next/image"
 import Clock from "./modules/Clock"
 import News from "./modules/News"
 import OutfitIdeas from "./modules/OutfitIdeas"
@@ -12,14 +11,14 @@ export default function Home() {
     <div className="pl-24">
       <Weather></Weather>
       <News></News>
-      <Photos></Photos>
+
       <Suspense>
-        {/* <OutfitIdeas></OutfitIdeas> */}
+        <OutfitIdeas></OutfitIdeas>
       </Suspense>
       <div className="flex justify-end pr-24">
         <Clock></Clock>
       </div>
       <PageRefreshTimer></PageRefreshTimer>
-    </div>
+    </main>
   )
 }

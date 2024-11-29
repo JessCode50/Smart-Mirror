@@ -95,4 +95,17 @@ export class WeatherData {
       }
     ) // the first part is undefined if no corresponding data
   }
+  public getUVString(): string {
+    if (this.UVIndex >= 0 && this.UVIndex < 3) {
+      return "Low"
+    } else if (this.UVIndex >= 3 && this.UVIndex < 6) {
+      return "Moderate"
+    } else if (this.UVIndex >= 6 && this.UVIndex < 8) {
+      return "High"
+    } else if (this.UVIndex >= 8 && this.UVIndex < 11) {
+      return "Very High"
+    } else {
+      return "Extreme"
+    }
+  }
 }
