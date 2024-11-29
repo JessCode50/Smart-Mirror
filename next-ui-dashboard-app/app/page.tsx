@@ -8,18 +8,22 @@ import Photos from "./modules/Photos"
 import SpotifyNowPlaying from "./modules/SpotifyIntegration/SpotifyNowPlaying"
 import SpotifyTop from "./modules/SpotifyIntegration/SpotifyTop"
 import {
+  db,
   DEFAULT_SETTINGS,
   getMirrorSettings,
   setMirrorSettings
 } from "./stores/settingsClient"
 import { checkSpotifyTokenExpired } from "./lib/spotifyDataTypes"
 import { requestFromRefreshToken } from "./lib/spotifyToken"
+export const dynamic = "force-dynamic"
 
 export default async function Home() {
   let mirrorSettings = await getMirrorSettings()
   if (mirrorSettings === null) {
     mirrorSettings = DEFAULT_SETTINGS
     await setMirrorSettings(mirrorSettings)
+    db.ping()
+    console.log("Null")
   }
   if (
     mirrorSettings.spotifyToken != undefined &&
@@ -28,6 +32,9 @@ export default async function Home() {
     mirrorSettings.spotifyToken = await requestFromRefreshToken(
       mirrorSettings.spotifyToken
     )
+  }
+  if (mirrorSettings.spotifyToken !== undefined) {
+    console.log("Working...")
   }
 
   return (
