@@ -17,6 +17,7 @@
     "openai": "^4.70.2",
     "react": "19.0.0-rc-02c0e824-20241028",
     "react-dom": "19.0.0-rc-02c0e824-20241028",
+    "use-server": "^0.4.9",
     "vercel": "^39.1.0"
   },
   "devDependencies": {

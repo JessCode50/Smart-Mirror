@@ -1,5 +1,6 @@
 import { DBAccess, MirrorSettings } from "../lib/dbAccess"
 import { SpotifyTokenStore } from "../lib/spotifyDataTypes"
+import "use-server"
 
 export const db = new DBAccess(
   "se101-finalproject-magicmirror-appdata",

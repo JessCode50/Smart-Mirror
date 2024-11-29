@@ -1,15 +1,9 @@
 "use client"
-
 import { FormEvent } from "react"
-import {
-  getMirrorSettings,
-  DEFAULT_SETTINGS,
-  setMirrorSettings
-} from "../stores/settingsClient"
 // import Icon from "@mdi/react"
 // import { mdiSpotify } from "@mdi/js"
 
-export default async function settings() {
+export default function settings() {
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     // Prevent the browser from reloading the page
     e.preventDefault()
@@ -23,11 +17,6 @@ export default async function settings() {
     // Or you can work with it as a plain object:
     const formJson = Object.fromEntries(formData.entries())
     console.log(formJson)
-  }
-  let mirrorSettings = await getMirrorSettings()
-  if (mirrorSettings === null) {
-    mirrorSettings = DEFAULT_SETTINGS
-    await setMirrorSettings(mirrorSettings)
   }
 
   return (
