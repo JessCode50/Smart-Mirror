@@ -122,7 +122,7 @@ export default function settings() {
             <br></br>
             <br></br>
             <label>
-              Number of Articles (max 10):{" "}
+              Number of Articles (max 5):{" "}
               <input
                 name="size"
                 type="number"
