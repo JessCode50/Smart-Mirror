@@ -31,10 +31,34 @@ const SpotifyNowPlaying = async ({
     }
   )
   if (currentlyPlayingReq.status == NO_RESULTS_HTTP_CODE)
-    return <h1>Nothing Playing on Spotify...</h1>
+    return (
+      <div>
+        <h1 className="text-2xl">Now Playing: </h1> <br></br>
+        <div className="flex flex-row gap-4">
+          <div className="w-[128px] h-[128px] bg-[#1ED760] rounded flex items-center justify-center">
+            <Icon path={mdiSpotify} size={3} className=""></Icon>
+          </div>
+          <div className="flex flex-col max-w-60">
+            <h2>Nothing Playing on Spotify...</h2>
+          </div>
+        </div>
+      </div>
+    )
   const songData: { item: Track } = await currentlyPlayingReq.json()
   if (songData.item === null || songData.item === undefined) {
-    return <h1>Nothing Playing on Spotify...</h1>
+    return (
+      <div>
+        <h1 className="text-2xl">Now Playing: </h1> <br></br>
+        <div className="flex flex-row gap-4">
+          <div className="w-[128px] h-[128px] bg-[#1ED760] rounded flex items-center justify-center">
+            <Icon path={mdiSpotify} size={3} className=""></Icon>
+          </div>
+          <div className="flex flex-col max-w-60">
+            <h2>Nothing Playing on Spotify...</h2>
+          </div>
+        </div>
+      </div>
+    )
   }
   return (
     <div>
@@ -46,6 +70,7 @@ const SpotifyNowPlaying = async ({
             width={128}
             height={128}
             alt="Album Cover"
+            className="rounded"
           ></Image>
         ) : (
           ""

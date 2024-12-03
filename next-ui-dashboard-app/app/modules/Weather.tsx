@@ -3,6 +3,7 @@ import { mdiWeatherSunnyAlert } from "@mdi/js"
 import { mdiWeatherWindy } from "@mdi/js"
 import { WeatherData } from "../lib/weatherData"
 import { fetchWeather } from "../lib/fetchWeather"
+import Link from "next/link"
 
 const Weather = async () => {
   let currWeather: WeatherData | null = null
@@ -64,6 +65,11 @@ const Weather = async () => {
             <h1 className="text-2xl text-right ml-4">
               Wind: {currWeather.wind} {currWeather.windSpeedUnit}
             </h1>
+          </div>
+          <div className="text-right text-xs">
+            <Link href="https://open-meteo.com/">
+              Weather data by Open-Meteo.com
+            </Link>
           </div>
         </div>
       </div>
