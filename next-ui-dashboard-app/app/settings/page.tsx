@@ -17,16 +17,25 @@ export default function settings() {
   }
   
   return (
-    <div>
+    <div className="bg-white text-black">
+      {/* <button className="border border-solid border-2 border-black rounded-lg">
+        <Icon path={mdiSpotify} size={1.5}></Icon>{" "}
+        {mirrorSettings.spotifyToken === undefined
+          ? "Log In to Spotify"
+          : "Log Out of Spotify"}
+      </button> */}
       <form method="post" onSubmit={handleSubmit}>
-        Please modify the settings as you wish, then press "save".<br></br>
-        <button type="submit" className="border-solid border-black border-2">Save Settings</button>
-        <br></br><br></br>
-    
-        <div className="grid grid-cols-3 gap-4">
-      
-          <div><h1 className="text-2xl">NEWS SETTINGS</h1><br></br>
-        
+        <p className="ml-1">Please modify the settings as you wish, then press save.</p>
+        <br></br>
+        <button type="submit" className="ml-1 border-solid border-black border-2">
+          Save Settings
+        </button>
+        <br></br>
+        <br></br>
+        <div className="ml-1 grid grid-cols-3 gap-4">
+          <div>
+            <h1 className="text-2xl">NEWS SETTINGS</h1>
+            <br></br>
             <label>
               Keywords (max 512 characters): <input name="q" type="text" placeholder="type here" className="border-solid border-black border-2"/>
             </label><br></br><br></br>
@@ -37,10 +46,20 @@ export default function settings() {
             <h6 className="text-xs">Go here to see a list of all country codes: https://bit.ly/MagicMirrorCountries</h6><br></br>
         
             <label>
-              Categories: <input name="category" type="text" placeholder="type here" defaultValue="politics,sports" className="border-solid border-black border-2"/>
-            </label><br></br>
-            <h6 className="text-xs">Go here to see a list of all category codes: https://bit.ly/MagicMirrorCategories</h6><br></br>
-        
+              Categories:{" "}
+              <input
+                name="category"
+                type="text"
+                placeholder="type here"
+                className="border-solid border-black border-2"
+              />
+            </label>
+            <br></br>
+            <h6 className="text-xs">
+              Go here to see a list of all category codes:
+              https://bit.ly/MagicMirrorCategories
+            </h6>
+            <br></br>
             <label>
               Languages: <input name="language" type="text" placeholder="type here" defaultValue="en,fr" className="border-solid border-black border-2"/>
             </label><br></br>
