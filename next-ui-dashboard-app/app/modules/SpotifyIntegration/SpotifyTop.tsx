@@ -3,7 +3,7 @@ import {
   checkSpotifyTokenExpired
 } from "@/app/lib/spotifyDataTypes"
 import { redirect } from "next/navigation"
-import { Track } from "@spotify/web-api-ts-sdk"
+import { SimplifiedArtist, Track } from "@spotify/web-api-ts-sdk"
 
 const SpotifyTop = async ({
   spotifyStore
@@ -28,16 +28,24 @@ const SpotifyTop = async ({
   )
   if (topTracksReq.status == 204) return <h1>Nothing Playing on Spotify...</h1>
   const topTracks: Track[] = (await topTracksReq.json()).items
-
+  function getArtistsString(artists: SimplifiedArtist[]) {
+    let artistString: string = ""
+    for (let i = 0; i < 2 && i < artists.length - 1; i++) {
+      artistString += artists[i].name + ", "
+    }
+    artistString += artists[artists.length - 1].name
+    return artistString
+  }
   return (
     <div className="flex flex-col gap-1 my-5 max-w-80">
       <h1 className="text-xl">Recent Favourites:</h1>
       <div className="grid grid-cols-2 gap-2">
         {topTracks.map((track: Track, i: number) => {
+          const artistString = getArtistsString(track.artists)
           return (
             <div key={i}>
               <h2>{track.name}</h2>
-              <h3 className="text-sm">{track.artists[0].name}</h3>
+              <h3 className="text-sm">{artistString}</h3>
             </div>
           )
         })}

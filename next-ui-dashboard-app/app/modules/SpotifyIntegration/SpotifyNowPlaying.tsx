@@ -6,7 +6,7 @@ import {
 import Image from "next/image"
 import Icon from "@mdi/react"
 import { mdiSpotify } from "@mdi/js"
-import { Track } from "@spotify/web-api-ts-sdk"
+import { SimplifiedArtist, Track } from "@spotify/web-api-ts-sdk"
 const NO_RESULTS_HTTP_CODE = 204
 
 const SpotifyNowPlaying = async ({
@@ -60,6 +60,17 @@ const SpotifyNowPlaying = async ({
       </div>
     )
   }
+  function getArtistsString(artists: SimplifiedArtist[]) {
+    let artistString: string = ""
+    for (let i = 0; i < 2 && i < artists.length - 1; i++) {
+      artistString += artists[i].name + ", "
+    }
+    artistString += artists[artists.length - 1].name
+    return artistString
+  }
+  const artistString = getArtistsString(songData.item.artists)
+  const albumArtAspectRatio =
+    songData.item.album.images[0].width / songData.item.album.images[0].height
   return (
     <div>
       <h1 className="text-2xl">Now Playing: </h1> <br></br>
@@ -68,7 +79,7 @@ const SpotifyNowPlaying = async ({
           <Image
             src={songData.item.album.images[0].url}
             width={128}
-            height={128}
+            height={128 / albumArtAspectRatio}
             alt="Album Cover"
             className="rounded"
           ></Image>
@@ -78,7 +89,7 @@ const SpotifyNowPlaying = async ({
         <div className="flex flex-col max-w-60">
           <Icon path={mdiSpotify} size={1.5}></Icon>
           <h2 className="text-xl">{songData.item.name}</h2>
-          <h3 className="text-lg">{songData.item.artists[0].name}</h3>
+          <h3 className="text-lg">{artistString}</h3>
         </div>
       </div>
     </div>
