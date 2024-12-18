@@ -10,6 +10,9 @@ SOUND_SPEED_M_S = 343
 
 DISTANCE_THRESHOLD_M = 0.3
 
+REPEAT_INTERVAL_S = 3
+TURN_OFF_TIME_S = 90
+
 TURN_DISPLAY_ON_SCRIPT = "/home/pi/mirror/scripts/turn-on.bash"
 TURN_DISPLAY_OFF_SCRIPT = "/home/pi/mirror/scripts/turn-off.bash"
 
@@ -44,13 +47,24 @@ def main():
   time.sleep(2)
 
   # Loop
-  distance = trigger()
-  print(f"Distance: {distance} m")
-  if distance < DISTANCE_THRESHOLD_M:
-    print("Turning display on")
-    # subprocess.run(["bash", TURN_DISPLAY_ON_SCRIPT])
-  else:
-    print("Not close enough")
+  last_turned_on = time.time()
+
+  try:
+    while True:
+      distance = trigger()
+      print(f"Distance: {distance} m")
+      if distance < DISTANCE_THRESHOLD_M:
+        last_turned_on = time.time()
+        print("Turning display on")
+        subprocess.run(["bash", TURN_DISPLAY_ON_SCRIPT])
+      elif time.time() > last_turned_on + TURN_OFF_TIME_S:
+        print("Turning display off")
+        subprocess.run(["bash", TURN_DISPLAY_OFF_SCRIPT])
+      
+      time.sleep(REPEAT_INTERVAL_S)
+
+  except:
+    print('Stopping echo.py')
 
   GPIO.cleanup()
 

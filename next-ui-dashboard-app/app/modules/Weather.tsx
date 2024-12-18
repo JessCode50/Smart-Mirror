@@ -3,6 +3,7 @@ import { mdiWeatherSunnyAlert } from "@mdi/js"
 import { mdiWeatherWindy } from "@mdi/js"
 import { WeatherData } from "../lib/weatherData"
 import { fetchWeather } from "../lib/fetchWeather"
+import Link from "next/link"
 
 const Weather = async () => {
   let currWeather: WeatherData | null = null
@@ -20,59 +21,55 @@ const Weather = async () => {
           <Icon
             // className="fill-current text-[#fcca56]"
             path={currWeather.getWeatherEvent().icon}
-            size={7}
+            size={9}
           />
         </div>
 
         <div className="pr-10"></div>
 
-        <div className="flex-none w-100">
-          <h1 className="text-7xl">{currWeather.temperature}ºC</h1>
-          <h1 className="text-2xl">
-            Feels Like {currWeather.temperatureApparent}ºC
-          </h1>
+        <div className="flex flex-col items-start">
+          <div className="mb-3">
+            <h1 className="text-7xl">{currWeather.temperature}ºC</h1>
+          </div>
+          <div className="mb-5">
+            <h1 className="text-2xl">
+              Feels Like {currWeather.temperatureApparent}ºC
+            </h1>
+          </div>
           <h1 className="text-2xl">{currWeather.getWeatherEvent().desc} </h1>
         </div>
 
-        <div className="pr-20"></div>
-        <div className="pr-5"></div>
-
-        <div className="flex-none">
-          <div className="mr-20">
+        <div className="flex-grow"></div>
+        <div className="flex-justify-end pr-2">
+          <div className="mb-2">
             <h1 className="text-2xl text-right">
               High: {currWeather.dailyHigh}ºC
             </h1>
-            <h1 className="text-2xl text-right">
-              Low: {currWeather.dailyLow}ºC
+          </div>
+          <h1 className="text-2xl text-right">Low: {currWeather.dailyLow}ºC</h1>
+
+          <div className="flex justify-end items-center mt-4">
+            <div className="flex-none w-8">
+              <Icon path={mdiWeatherSunnyAlert} size={1.5} />
+            </div>
+
+            <h1 className="text-2xl text-right ml-4">
+              UV Index: {currWeather.UVIndex} ~ {currWeather.getUVString()}
             </h1>
+          </div>
 
-            <div className="flex">
-              <div className="flex-none w-50">
-                <Icon path={mdiWeatherSunnyAlert} size={1.5} />
-              </div>
-
-              <div className="pr-3"></div>
-
-              <div className="flex-1">
-                <h1 className="text-2xl text-right">
-                  UV Index: {currWeather.UVIndex} ~ {currWeather.getUVString()}
-                </h1>
-              </div>
+          <div className="flex justify-end items-center mt-4">
+            <div className="flex-none w-8">
+              <Icon path={mdiWeatherWindy} size={1.5} />
             </div>
-
-            <div className="flex">
-              <div className="pr-10"></div>
-              <div className="pr-7"></div>
-              <div className="flex-none w-50">
-                <Icon path={mdiWeatherWindy} size={1.5} />
-              </div>
-
-              <div className="flex-1">
-                <h1 className="text-2xl text-right">
-                  Wind: {currWeather.wind} {currWeather.windSpeedUnit}
-                </h1>
-              </div>
-            </div>
+            <h1 className="text-2xl text-right ml-4">
+              Wind: {currWeather.wind} {currWeather.windSpeedUnit}
+            </h1>
+          </div>
+          <div className="text-right text-xs">
+            <Link href="https://open-meteo.com/">
+              Weather data by Open-Meteo.com
+            </Link>
           </div>
         </div>
       </div>

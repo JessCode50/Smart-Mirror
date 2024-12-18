@@ -5,17 +5,17 @@
 @tailwind utilities;
 
 :root {
-  --background: #000000;
-  --foreground: #ededed;
+  --background: #000000; 
+  --foreground: #ffffff;
 }
 
-@media (prefers-color-scheme: dark) {
+/*@media (prefers-color-scheme: dark) {
   :root {
     --background: #000000;
     --foreground: #ededed;
   }
 }
-
+*/
 body {
   color: var(--foreground);
   background: var(--background);
