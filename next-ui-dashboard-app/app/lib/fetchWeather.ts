@@ -1,10 +1,31 @@
 "use server"
-
 import { WeatherData } from "./weatherData"
 
-export async function fetchWeather(): Promise<WeatherData> {
+export async function fetchWeather(
+  latitude: number,
+  longitude: number,
+  tempUnit: "Fahrenheit" | "Celsius",
+  speedUnit: "km/h" | "mph" | "m/s" | "kn"
+): Promise<WeatherData> {
+  const tempUnitStr =
+    tempUnit == "Fahrenheit" ? "&temperature_unit=fahrenheit" : ""
+  let speedUnitStr: string
+  switch (speedUnit) {
+    case "mph":
+      speedUnitStr = "&wind_speed_unit=mph"
+      break
+    case "kn":
+      speedUnitStr = "&wind_speed_unit=kn"
+      break
+    case "m/s":
+      speedUnitStr = "&wind_speed_unit=ms"
+      break
+    default:
+      speedUnitStr = ""
+      break
+  }
   const data = await fetch(
-    "https://api.open-meteo.com/v1/forecast?latitude=43.4668&longitude=-80.5164&current=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&hourly=temperature_2m,apparent_temperature,precipitation,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,uv_index_max&timezone=auto"
+    `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&hourly=temperature_2m,apparent_temperature,precipitation,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,uv_index_max&timezone=auto${tempUnitStr}${speedUnitStr}`
   )
   const weatherInfo = await data.json()
   if (!weatherInfo)
@@ -20,7 +41,7 @@ export async function fetchWeather(): Promise<WeatherData> {
   const UVindex: number = weatherInfo.daily.uv_index_max[0]
   console.log(UVindex)
   const code: number = weatherInfo.current.weather_code
-  return new WeatherData(
+  const finalData = new WeatherData(
     temperature,
     temperatureApparent,
     dailyHigh,
@@ -29,5 +50,8 @@ export async function fetchWeather(): Promise<WeatherData> {
     wind,
     code
   )
+  finalData.temperatureUnit = tempUnit
+  finalData.windSpeedUnit = speedUnit
+  return finalData
   //
 }

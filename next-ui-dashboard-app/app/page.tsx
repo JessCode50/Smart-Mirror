@@ -26,7 +26,7 @@ export default async function Home() {
     console.log("Null")
   }
   if (
-    mirrorSettings.spotifyToken != undefined &&
+    mirrorSettings.spotifyToken !== null &&
     checkSpotifyTokenExpired(mirrorSettings.spotifyToken)
   ) {
     mirrorSettings.spotifyToken = await requestFromRefreshToken(
@@ -40,12 +40,17 @@ export default async function Home() {
   return (
     <main className="pl-2 flex flex-col min-h-screen">
       <div className="mb-19">
-        <Weather></Weather>
+        <Weather
+          latitude={mirrorSettings.weather.latitude}
+          longitude={mirrorSettings.weather.longitude}
+          tempUnit={mirrorSettings.weather.tempUnit}
+          speedUnit={mirrorSettings.weather.speedUnit}
+        ></Weather>
       </div>
       <div className="flex flex-row flex-grow">
         <div className="flex flex-col flex-grow">
           <div className="mb-10">
-            <News></News>
+            <News {...mirrorSettings.news}></News>
           </div>
           <div className="mb-10">
             <Suspense>
@@ -58,7 +63,14 @@ export default async function Home() {
             </Suspense>
           </div>
           <Suspense>
-            <OutfitIdeas></OutfitIdeas>
+            <OutfitIdeas
+              style={mirrorSettings.outfitSuggestions.style}
+              genderStyle={mirrorSettings.outfitSuggestions.gender}
+              latitude={mirrorSettings.weather.latitude}
+              longitude={mirrorSettings.weather.longitude}
+              tempUnit={mirrorSettings.weather.tempUnit}
+              speedUnit={mirrorSettings.weather.speedUnit}
+            ></OutfitIdeas>
           </Suspense>
         </div>
         <div className="flex-grow"></div>

@@ -49,13 +49,7 @@ export async function GET(request: NextRequest) {
     token: accessToken,
     refresh_token: accessToken.refresh_token || ""
   }
-  cookieStore.set("spotifyToken", JSON.stringify(tokenObject), {
-    httpOnly: true,
-    secure: true,
-    sameSite: "strict",
-    expires: Date.now() + 90 * 24 * 60 * 60 * 1000
-  })
   await updateSpotifyAccessToken(tokenObject)
-  redirect("/")
+  redirect("/settings")
   // query is "hello" for /api/search?query=hello
 }

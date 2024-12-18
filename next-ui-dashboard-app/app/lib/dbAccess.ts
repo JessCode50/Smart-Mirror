@@ -1,4 +1,4 @@
-import { MongoClient, ServerApiVersion, ObjectId } from "mongodb"
+import { MongoClient, ServerApiVersion, ObjectId, Db } from "mongodb"
 import { SpotifyTokenStore } from "./spotifyDataTypes"
 
 const CONNECTION_STRING = process.env.MONGODB_CONNECTION_STRING
@@ -11,18 +11,29 @@ export interface MirrorSettings {
     longitude: number
     latitude: number
     tempUnit: "Fahrenheit" | "Celsius"
+    speedUnit: "km/h" | "mph" | "m/s" | "kn"
   }
   outfitSuggestions: {
     style: string
     gender: string
   }
-  spotifyToken?: SpotifyTokenStore
+  spotifyToken: SpotifyTokenStore | null
+  news: {
+    keywords: string
+    countries: string
+    categories: string
+    languages: string
+    domains: string
+    excludeDomains: string
+    numberOfArticles: number
+  }
 }
 
 export class DBAccess {
   private client: MongoClient
   private dbName: string
   private settingsCollection: string
+  private db: Db
   constructor(dbName: string, settingsCollection: string) {
     if (CONNECTION_STRING == undefined) {
       throw Error(
@@ -38,12 +49,13 @@ export class DBAccess {
     })
     this.dbName = dbName
     this.settingsCollection = settingsCollection
+    this.db = this.client.db(this.dbName)
   }
 
   async ping() {
     try {
       // Send a ping to confirm a successful connection
-      await this.client.db("admin").command({ ping: 1 })
+      await this.db.command({ ping: 1 })
       console.log(
         "Pinged your deployment. You successfully connected to MongoDB!"
       )
@@ -54,8 +66,7 @@ export class DBAccess {
 
   async getSettings(username: string): Promise<MirrorSettings | null> {
     try {
-      const settings = (await this.client
-        .db(this.dbName)
+      const settings = (await this.db
         .collection(this.settingsCollection)
         .findOne({ username: username })) as MirrorSettings | null
       return settings
@@ -66,8 +77,7 @@ export class DBAccess {
 
   async writeSettings(settings: MirrorSettings): Promise<void> {
     try {
-      await this.client
-        .db(this.dbName)
+      await this.db
         .collection(this.settingsCollection)
         .updateOne(
           { username: settings.username },

@@ -7,7 +7,7 @@ const Photos = async () => {
   const num = imageNum.toString()
   const numStr = `/Images/image${num}.jpeg`
   return (
-    <div className = "pr-3">
+    <div className="pr-3">
       <Image src={numStr} width={300} height={300} alt="photo"></Image>
     </div>
   )

@@ -8,9 +8,9 @@ import { SimplifiedArtist, Track } from "@spotify/web-api-ts-sdk"
 const SpotifyTop = async ({
   spotifyStore
 }: {
-  spotifyStore: SpotifyTokenStore | undefined
+  spotifyStore: SpotifyTokenStore | null
 }) => {
-  if (spotifyStore === undefined) return <div>Spotify account not setup...</div>
+  if (spotifyStore === null) return <div>Spotify account not setup...</div>
 
   // Check token expiry
   if (checkSpotifyTokenExpired(spotifyStore)) {

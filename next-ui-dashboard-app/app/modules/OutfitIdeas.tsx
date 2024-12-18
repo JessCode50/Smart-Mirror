@@ -2,7 +2,21 @@ import OpenAI from "openai"
 import { fetchWeather } from "../lib/fetchWeather"
 import { WeatherData } from "../lib/weatherData"
 
-const OutfitIdeas = async () => {
+const OutfitIdeas = async ({
+  style,
+  genderStyle,
+  longitude,
+  latitude,
+  tempUnit,
+  speedUnit
+}: {
+  style: string
+  genderStyle: string
+  longitude: number
+  latitude: number
+  tempUnit: "Fahrenheit" | "Celsius"
+  speedUnit: "km/h" | "mph" | "m/s" | "kn"
+}) => {
   const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
   })
@@ -10,7 +24,7 @@ const OutfitIdeas = async () => {
     weather:
       | { weatherData: WeatherData | "No Data"; weatherEventDesc: string }
       | "No Data"
-    genderStyle: "Men" | "Women" | "Unisex"
+    genderStyle: string
     style: string
   } = {
     weather: "No Data",
@@ -20,7 +34,7 @@ const OutfitIdeas = async () => {
   let currWeather: WeatherData | undefined = undefined
 
   try {
-    currWeather = await fetchWeather()
+    currWeather = await fetchWeather(latitude, longitude, tempUnit, speedUnit)
     if (currWeather != undefined) {
       aiQueryData.weather = {
         weatherData: currWeather,
@@ -30,6 +44,8 @@ const OutfitIdeas = async () => {
   } catch {
     aiQueryData.weather = "No Data"
   }
+  aiQueryData.genderStyle = genderStyle
+  aiQueryData.style = style
 
   console.log(aiQueryData)
 

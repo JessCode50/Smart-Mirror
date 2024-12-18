@@ -1,16 +1,39 @@
-const News = async () => {
-  const data = await fetch(
-    "https://newsdata.io/api/1/latest?apikey=pub_585756761adc3fda997c187e7ec49def8c62e&language=en&country=ca&category=sports,technology,education&prioritydomain=top&size=5&video=0&image=0&removeduplicate=1&excludedomain=news.google.com,9to5google.com"
-  )
+const News = async (newsSettings: {
+  keywords: string
+  countries: string
+  categories: string
+  languages: string
+  domains: string
+  excludeDomains: string
+  numberOfArticles: number
+}) => {
+  if (process.env.NEWSDATA_API_KEY === undefined)
+    throw new Error(
+      "[ERROR] News Module: No Newsdata API KEY! Specify NEWSDATA_API_KEY env variable..."
+    )
+  const url = `https://newsdata.io/api/1/latest?apikey=${process.env.NEWSDATA_API_KEY}\
+&language=${newsSettings.languages}&country=${newsSettings.countries}\
+&category=${newsSettings.categories}\
+&prioritydomain=top&size=${newsSettings.numberOfArticles}&video=0&image=0&removeduplicate=1\
+${newsSettings.excludeDomains.trim() === "" ? "" : `&excludedomain=${newsSettings.excludeDomains}`}\
+${newsSettings.keywords.trim() === "" ? "" : `&q=${newsSettings.keywords}`}\
+${newsSettings.domains.trim() === "" ? "" : `&domain=${newsSettings.domains}`}`
+  console.log(url)
+  const data = await fetch(url)
 
   interface ArticleInfo {
     source_name: string
     title: string
   }
   const articles: {
+    status: string
     results: Array<ArticleInfo>
   } = await data.json()
 
+  if (articles.status !== "success")
+    throw new Error(
+      "[Error] News Module: Fetch Error - " + JSON.stringify(articles.results)
+    )
   return (
     <div>
       <div className="grid grid-cols-1 gap-4 max-w-80">

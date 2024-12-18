@@ -13,12 +13,23 @@ export const DEFAULT_SETTINGS: MirrorSettings = {
   weather: {
     longitude: -80.5204,
     latitude: 43.4643,
-    tempUnit: "Celsius"
+    tempUnit: "Celsius",
+    speedUnit: "km/h"
   },
   outfitSuggestions: {
     style: "Streetwear",
     gender: "Unisex"
-  }
+  },
+  news: {
+    keywords: "",
+    countries: "ca,us",
+    categories: "politics,sports",
+    languages: "en,fr",
+    domains: "",
+    excludeDomains: "",
+    numberOfArticles: 3
+  },
+  spotifyToken: null
 }
 export async function getMirrorSettings(): Promise<MirrorSettings | null> {
   const settings = await db.getSettings("default")
@@ -29,12 +40,13 @@ export async function setMirrorSettings(settings: MirrorSettings) {
   db.writeSettings(settings)
 }
 export async function updateSpotifyAccessToken(
-  newTokenStore: SpotifyTokenStore
+  newTokenStore: SpotifyTokenStore | null
 ) {
   let settings = await db.getSettings("default")
   if (settings === null) {
     settings = DEFAULT_SETTINGS
   }
   settings.spotifyToken = newTokenStore
+  settings.settingsUpdated = true
   db.writeSettings(settings)
 }

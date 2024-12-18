@@ -39,6 +39,7 @@ export async function requestFromRefreshToken(
     expires: Date.now() + accessToken.expires_in * 1000
   }
   await updateSpotifyAccessToken(spotifyStore)
+  return spotifyStore
 }
 
 // TODO: Eventually the token should be stored in a database

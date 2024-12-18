@@ -18,7 +18,7 @@ const Clock: React.FC = () => {
         new Intl.DateTimeFormat("en-US", {
           month: "long",
           day: "numeric",
-          year: "numeric",
+          year: "numeric"
         }).format(now)
       )
     }
@@ -30,7 +30,7 @@ const Clock: React.FC = () => {
   }, [])
 
   return (
-    <div className = "text-right">
+    <div className="text-right">
       <h6 className="text-8xl mb-2">{time}</h6>
       <h6 className="text-4xl font-bold">{date}</h6>
     </div>

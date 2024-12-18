@@ -5,11 +5,21 @@ import { WeatherData } from "../lib/weatherData"
 import { fetchWeather } from "../lib/fetchWeather"
 import Link from "next/link"
 
-const Weather = async () => {
+const Weather = async ({
+  latitude,
+  longitude,
+  tempUnit,
+  speedUnit
+}: {
+  longitude: number
+  latitude: number
+  tempUnit: "Fahrenheit" | "Celsius"
+  speedUnit: "km/h" | "mph" | "m/s" | "kn"
+}) => {
   let currWeather: WeatherData | null = null
 
   try {
-    currWeather = await fetchWeather()
+    currWeather = await fetchWeather(latitude, longitude, tempUnit, speedUnit)
   } catch {
     currWeather = null
   }
@@ -29,11 +39,15 @@ const Weather = async () => {
 
         <div className="flex flex-col items-start">
           <div className="mb-3">
-            <h1 className="text-7xl">{currWeather.temperature}ºC</h1>
+            <h1 className="text-7xl">
+              {currWeather.temperature}{" "}
+              {`°${currWeather.temperatureUnit == "fahrenheit" ? "F" : "C"}`}
+            </h1>
           </div>
           <div className="mb-5">
             <h1 className="text-2xl">
-              Feels Like {currWeather.temperatureApparent}ºC
+              Feels Like {currWeather.temperatureApparent}{" "}
+              {`°${currWeather.temperatureUnit == "fahrenheit" ? "F" : "C"}`}
             </h1>
           </div>
           <h1 className="text-2xl">{currWeather.getWeatherEvent().desc} </h1>
@@ -43,10 +57,14 @@ const Weather = async () => {
         <div className="flex-justify-end pr-2">
           <div className="mb-2">
             <h1 className="text-2xl text-right">
-              High: {currWeather.dailyHigh}ºC
+              High: {currWeather.dailyHigh}{" "}
+              {`°${currWeather.temperatureUnit == "fahrenheit" ? "F" : "C"}`}
             </h1>
           </div>
-          <h1 className="text-2xl text-right">Low: {currWeather.dailyLow}ºC</h1>
+          <h1 className="text-2xl text-right">
+            Low: {currWeather.dailyLow}{" "}
+            {`°${currWeather.temperatureUnit == "fahrenheit" ? "F" : "C"}`}
+          </h1>
 
           <div className="flex justify-end items-center mt-4">
             <div className="flex-none w-8">
