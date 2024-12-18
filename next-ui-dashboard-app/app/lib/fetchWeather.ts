@@ -49,7 +49,7 @@ export async function fetchWeather(
     wind,
     code
   )
-  finalData.temperatureUnit = tempUnit
+  finalData.temperatureUnit = tempUnit.toLowerCase()
   finalData.windSpeedUnit = speedUnit
   return finalData
   //
