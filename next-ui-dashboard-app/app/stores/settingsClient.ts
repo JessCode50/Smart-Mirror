@@ -32,7 +32,7 @@ export const DEFAULT_SETTINGS: MirrorSettings = {
   spotifyToken: null
 }
 export async function getMirrorSettings(): Promise<MirrorSettings | null> {
-  const settings = await db.getSettings("default")
+  const settings = await db.getSettings()
   if (settings === null || settings.spotifyToken === undefined) return null
   return settings
 }
@@ -42,7 +42,7 @@ export async function setMirrorSettings(settings: MirrorSettings) {
 export async function updateSpotifyAccessToken(
   newTokenStore: SpotifyTokenStore | null
 ) {
-  let settings = await db.getSettings("default")
+  let settings = await db.getSettings()
   if (settings === null) {
     settings = DEFAULT_SETTINGS
   }

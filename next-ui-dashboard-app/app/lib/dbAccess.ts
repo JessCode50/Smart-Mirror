@@ -64,7 +64,8 @@ export class DBAccess {
     }
   }
 
-  async getSettings(username: string): Promise<MirrorSettings | null> {
+  async getSettings(): Promise<MirrorSettings | null> {
+    const username = process.env.MIRROR_ID || "default"
     try {
       const settings = (await this.db
         .collection(this.settingsCollection)

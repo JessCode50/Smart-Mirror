@@ -8,7 +8,7 @@ import { requestFromRefreshToken } from "../lib/spotifyToken"
 export const dynamic = "force-dynamic"
 
 export default async function SettingsPage() {
-  let mirrorSettings = await db.getSettings("default")
+  let mirrorSettings = await db.getSettings()
   if (mirrorSettings === null) {
     db.writeSettings(DEFAULT_SETTINGS)
     mirrorSettings = DEFAULT_SETTINGS
