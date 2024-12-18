@@ -9,6 +9,7 @@ import { updateSpotifyAccessToken } from "@/app/stores/settingsClient"
 
 const client_id = "ff8ff81c736941439e5a5ea1a89ffdea"
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET
+export const dynamic = "force-dynamic"
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
@@ -17,8 +18,9 @@ export async function GET(request: NextRequest) {
 
   const cookieStore = await cookies()
   const storedState = cookieStore.get("state")?.value
-  console.log(storedState)
-  console.log(returnedState)
+  console.log("Setting spotify token...")
+  console.log("Stored State:" + storedState)
+  console.log("Returned State: " + returnedState)
   if (
     storedState === undefined ||
     returnedState === null ||
@@ -29,7 +31,6 @@ export async function GET(request: NextRequest) {
   if (authCode == null || client_secret == undefined) {
     return new Response("ERROR: No auth code received!")
   }
-  console.log(request.nextUrl.protocol + "//" + request.nextUrl.host)
   const accessTokenReq = await fetch(
     `https://accounts.spotify.com/api/token?code=${authCode}&redirect_uri=${request.nextUrl.protocol + "//" + request.nextUrl.host}/spotify_login/callback&grant_type=authorization_code`,
     {
@@ -51,5 +52,4 @@ export async function GET(request: NextRequest) {
   }
   await updateSpotifyAccessToken(tokenObject)
   redirect("/settings")
-  // query is "hello" for /api/search?query=hello
 }

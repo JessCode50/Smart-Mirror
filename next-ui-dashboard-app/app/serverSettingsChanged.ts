@@ -7,7 +7,6 @@ export async function fetchSettingsChanged() {
 }
 export async function pushSettingsChanged() {
   const settings = await db.getSettings()
-  console.log({ ...settings, settingsUpdated: false })
   if (settings !== null) {
     db.writeSettings({ ...settings, settingsUpdated: false })
   }

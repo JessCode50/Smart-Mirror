@@ -13,22 +13,10 @@ export default function PageRefreshTimer() {
   }
   const lastRefresh = useRef(Date.now())
   useEffect(() => {
-    // const refreshInterval = setInterval(() => {
-    //   if (Date.now() - lastRefresh.current > THIRTY_SEVEN_MINUTES) {
-    //     refreshPage()
-    //   } else if (settingsChanged === false) {
-    //     console.log("dsad")
-    //     fetchSettingsChanged().then((res) => {
-    //       console.log(res)
-    //       pushSettingsChanged().then(() => refreshPage())
-    //     })
-    //     clearInterval(refreshInterval)
-    //   }
-    // }, 3000)
     let refreshInterval: NodeJS.Timeout
 
     pushSettingsChanged().then(() => {
-      console.log("pushed")
+      console.log("Refreshed!")
       refreshInterval = setInterval(() => {
         fetchSettingsChanged().then((res) => {
           if (res === true) {
@@ -39,7 +27,7 @@ export default function PageRefreshTimer() {
           lastRefresh.current = Date.now()
           refreshPage()
         }
-      }, 3000)
+      }, 6000)
     })
 
     return () => {

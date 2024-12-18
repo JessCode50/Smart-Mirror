@@ -28,7 +28,6 @@ export async function requestFromRefreshToken(
   )
   let accessToken: SpotifyAccessToken
   try {
-    console.log(accessTokenReq.body)
     accessToken = await accessTokenReq.json()
   } catch (e) {
     throw e

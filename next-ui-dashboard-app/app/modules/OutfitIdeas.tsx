@@ -47,8 +47,6 @@ const OutfitIdeas = async ({
   aiQueryData.genderStyle = genderStyle
   aiQueryData.style = style
 
-  console.log(aiQueryData)
-
   const completion = await openai.chat.completions.create({
     model: "gpt-4o-mini",
     messages: [

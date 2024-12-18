@@ -3,8 +3,8 @@ import { FormEvent, useState } from "react"
 import { MirrorSettings } from "../lib/dbAccess"
 import { mdiSpotify } from "@mdi/js"
 import Icon from "@mdi/react"
-import Link from "next/link"
 import { writeSettings } from "./serverWriteSettings"
+import { useRouter } from "next/navigation"
 const SettingsForm = ({
   currentSettingsStr,
   spotifyLoggedIn,
@@ -15,7 +15,7 @@ const SettingsForm = ({
   userName: string | undefined
 }) => {
   const originalSettings = JSON.parse(currentSettingsStr) as MirrorSettings
-
+  const router = useRouter()
   const [settings, setSettings] = useState({ ...originalSettings })
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     // Prevent the browser from reloading the page
@@ -25,7 +25,6 @@ const SettingsForm = ({
     const form = e.target as HTMLFormElement
     const formData = new FormData(form)
     //hardcode which setting goes to which api
-    console.log(settings)
     // Or you can work with it as a plain object:
     const formJson = Object.fromEntries(formData.entries())
     const newSettings: MirrorSettings = {
@@ -286,18 +285,20 @@ const SettingsForm = ({
           <h1 className="text-2xl">SPOTIFY SETTINGS</h1>
           {spotifyLoggedIn ? "Current Spotify Account: " + userName : ""}{" "}
           <br></br>
-          <Link
-            href={spotifyLoggedIn ? "/spotify_login/logout" : "/spotify_login"}
+          <button
+            className="bg-[#1ED760] p-4 m-4 rounded hover:bg-gray-400"
+            onClick={() => {
+              if (spotifyLoggedIn) router.push("/spotify_login/logout")
+              else router.push("/spotify_login")
+            }}
           >
-            <button className="bg-[#1ED760] p-4 m-4 rounded hover:bg-gray-400">
-              <span>
-                <Icon path={mdiSpotify} size={1}></Icon>
-                {spotifyLoggedIn && spotifyLoggedIn !== null
-                  ? "Unlink Account"
-                  : "Log into Spotify"}
-              </span>
-            </button>
-          </Link>
+            <span>
+              <Icon path={mdiSpotify} size={1}></Icon>
+              {spotifyLoggedIn && spotifyLoggedIn !== null
+                ? "Unlink Account"
+                : "Log into Spotify"}
+            </span>
+          </button>
         </div>
       </div>
     </form>

@@ -18,7 +18,6 @@ const News = async (newsSettings: {
 ${newsSettings.excludeDomains.trim() === "" ? "" : `&excludedomain=${newsSettings.excludeDomains}`}\
 ${newsSettings.keywords.trim() === "" ? "" : `&q=${newsSettings.keywords}`}\
 ${newsSettings.domains.trim() === "" ? "" : `&domain=${newsSettings.domains}`}`
-  console.log(url)
   const data = await fetch(url)
 
   interface ArticleInfo {
@@ -31,8 +30,11 @@ ${newsSettings.domains.trim() === "" ? "" : `&domain=${newsSettings.domains}`}`
   } = await data.json()
 
   if (articles.status !== "success")
-    throw new Error(
-      "[Error] News Module: Fetch Error - " + JSON.stringify(articles.results)
+    return (
+      <div>
+        {"[Error] News Module: Fetch Error - " +
+          JSON.stringify(articles.results)}
+      </div>
     )
   return (
     <div>

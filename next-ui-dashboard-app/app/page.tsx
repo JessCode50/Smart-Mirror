@@ -3,27 +3,22 @@ import News from "./modules/News"
 import OutfitIdeas from "./modules/OutfitIdeas"
 import Weather from "./modules/Weather"
 import { Suspense } from "react"
-import PageRefreshTimer from "./PageRefreshTimer"
 import Photos from "./modules/Photos"
 import SpotifyNowPlaying from "./modules/SpotifyIntegration/SpotifyNowPlaying"
 import SpotifyTop from "./modules/SpotifyIntegration/SpotifyTop"
-import {
-  db,
-  DEFAULT_SETTINGS,
-  getMirrorSettings,
-  setMirrorSettings
-} from "./stores/settingsClient"
+import { db, DEFAULT_SETTINGS } from "./stores/settingsClient"
 import { checkSpotifyTokenExpired } from "./lib/spotifyDataTypes"
 import { requestFromRefreshToken } from "./lib/spotifyToken"
+import PageRefreshTimer from "./PageRefreshTimer"
 export const dynamic = "force-dynamic"
 
 export default async function Home() {
-  let mirrorSettings = await getMirrorSettings()
+  let mirrorSettings = await db.getSettings()
   if (mirrorSettings === null) {
     mirrorSettings = DEFAULT_SETTINGS
-    await setMirrorSettings(mirrorSettings)
+    await db.writeSettings(mirrorSettings)
     db.ping()
-    console.log("Null")
+    console.log("New Settings Created...")
   }
   if (
     mirrorSettings.spotifyToken !== null &&
@@ -33,8 +28,8 @@ export default async function Home() {
       mirrorSettings.spotifyToken
     )
   }
-  if (mirrorSettings.spotifyToken !== undefined) {
-    console.log("Working...")
+  if (mirrorSettings.spotifyToken !== null) {
+    console.log("Spotify Logged In!")
   }
 
   return (

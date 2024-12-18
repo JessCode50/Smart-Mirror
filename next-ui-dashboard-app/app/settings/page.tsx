@@ -19,7 +19,6 @@ export default async function SettingsPage() {
     spotifyLoggedIn = true
     let token = mirrorSettings.spotifyToken
     if (checkSpotifyTokenExpired(token)) {
-      console.log("expired")
       token = await requestFromRefreshToken(token)
     }
     const profileReq = await fetch("https://api.spotify.com/v1/me", {
@@ -28,7 +27,6 @@ export default async function SettingsPage() {
       }
     })
     const profile = (await profileReq.json()) as UserProfile
-    console.log(profile)
     userName = profile.email
     mirrorSettings.spotifyToken = null // Set to undefined before passing to client
   }
