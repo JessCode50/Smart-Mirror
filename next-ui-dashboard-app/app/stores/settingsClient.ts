@@ -8,7 +8,7 @@ export const db = new DBAccess(
 )
 
 export const DEFAULT_SETTINGS: MirrorSettings = {
-  username: "default", // will be default always for now
+  username: process.env.MIRROR_ID || "default", // will be default always for now
   settingsUpdated: true,
   weather: {
     longitude: -80.5204,
