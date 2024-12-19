@@ -22,6 +22,16 @@ To run the development server:
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To build for production:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
+
+To host a server, after building:
+
+```bash
+npm run start
+```
+
+Demo is available at: https://se101-magicmirror-dashboard-next.vercel.app/
