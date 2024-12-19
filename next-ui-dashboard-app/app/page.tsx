@@ -32,12 +32,44 @@ export default async function Home() {
     console.log("Spotify Logged In!")
   }
 
+  let longitude = mirrorSettings.weather.longitude
+  let latitude = mirrorSettings.weather.latitude
+  // Will not always be accurate as the first search result is picked
+  if (longitude === null || latitude === null) {
+    const country = mirrorSettings.weather.country
+    const city = mirrorSettings.weather.city
+    const state = mirrorSettings.weather.state
+    const upperState = state.toUpperCase()
+    const geoData = await fetch(
+      `https://singlesearch.alk.com/NA/api/search?authToken=386EF13A44DC7A43A0E284E85755B336&query=${city},${state},08540&countries=${country}&states=${upperState}`
+    )
+
+    const geo = await geoData.json()
+    console.log(geo)
+    if (geo.Locations[0] === undefined)
+      throw new Error(
+        "[ERROR] Mirror Settings: Invalid Location for Weather! Specify Longitude and Latitude..."
+      )
+
+    latitude = geo.Locations[0].Coords.Lat
+
+    longitude = geo.Locations[0].Coords.Lon
+    console.log(
+      `Fetched Latitude and Longitude! Lat: ${latitude}, Lon: ${longitude}`
+    )
+  }
+  if (longitude === null || latitude === null) {
+    throw new Error(
+      "[ERROR] Mirror Settings: Invalid Location for Weather! Specify Longitude and Latitude..."
+    )
+  }
+
   return (
     <main className="pl-2 flex flex-col min-h-screen">
       <div className="mb-19">
         <Weather
-          latitude={mirrorSettings.weather.latitude}
-          longitude={mirrorSettings.weather.longitude}
+          latitude={latitude}
+          longitude={longitude}
           tempUnit={mirrorSettings.weather.tempUnit}
           speedUnit={mirrorSettings.weather.speedUnit}
         ></Weather>
@@ -61,8 +93,8 @@ export default async function Home() {
             <OutfitIdeas
               style={mirrorSettings.outfitSuggestions.style}
               genderStyle={mirrorSettings.outfitSuggestions.gender}
-              latitude={mirrorSettings.weather.latitude}
-              longitude={mirrorSettings.weather.longitude}
+              latitude={latitude}
+              longitude={longitude}
               tempUnit={mirrorSettings.weather.tempUnit}
               speedUnit={mirrorSettings.weather.speedUnit}
             ></OutfitIdeas>

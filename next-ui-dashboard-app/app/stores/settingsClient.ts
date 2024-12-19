@@ -14,7 +14,10 @@ export const DEFAULT_SETTINGS: MirrorSettings = {
     longitude: -80.5204,
     latitude: 43.4643,
     tempUnit: "Celsius",
-    speedUnit: "km/h"
+    speedUnit: "km/h",
+    country: "Canada",
+    city: "Waterloo",
+    state: "ON"
   },
   outfitSuggestions: {
     style: "Streetwear",

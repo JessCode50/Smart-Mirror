@@ -8,10 +8,13 @@ export interface MirrorSettings {
   username: string // will be default always for now
   settingsUpdated: boolean
   weather: {
-    longitude: number
-    latitude: number
+    longitude: number | null
+    latitude: number | null
     tempUnit: "Fahrenheit" | "Celsius"
     speedUnit: "km/h" | "mph" | "m/s" | "kn"
+    country: string
+    city: string
+    state: string
   }
   outfitSuggestions: {
     style: string

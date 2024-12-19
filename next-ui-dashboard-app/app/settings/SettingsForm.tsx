@@ -14,6 +14,9 @@ const SettingsForm = ({
   spotifyLoggedIn: boolean
   userName: string | undefined
 }) => {
+  function filterString(str: string) {
+    return str.replace(/[^a-zA-Z0-9,.-]/gi, "")
+  }
   const originalSettings = JSON.parse(currentSettingsStr) as MirrorSettings
   const router = useRouter()
   const [settings, setSettings] = useState({ ...originalSettings })
@@ -30,27 +33,38 @@ const SettingsForm = ({
     const newSettings: MirrorSettings = {
       ...settings,
       news: {
-        keywords: String(formJson.NEWSkeywords),
-        countries: String(formJson.NEWScountries),
-        categories: String(formJson.NEWScategories),
-        languages: String(formJson.NEWSlanguages),
-        domains: String(formJson.NEWSdomains),
-        excludeDomains: String(formJson.NEWSexcludeDomains),
+        keywords: filterString(String(formJson.NEWSkeywords)),
+        countries: filterString(String(formJson.NEWScountries)),
+        categories: filterString(String(formJson.NEWScategories)),
+        languages: filterString(String(formJson.NEWSlanguages)),
+        domains: filterString(String(formJson.NEWSdomains)),
+        excludeDomains: filterString(String(formJson.NEWSexcludeDomains)),
         numberOfArticles: Number(formJson.NEWSnumberOfArticles)
       },
       weather: {
-        longitude: Number(formJson.WEATHERlongitude),
-        latitude: Number(formJson.WEATHERlatitude),
-        tempUnit: String(formJson.WEATHERtempUnit) as "Fahrenheit" | "Celsius",
-        speedUnit: String(formJson.WEATHERspeedUnit) as
+        longitude:
+          filterString(String(formJson.WEATHERlongitude)).trim() === ""
+            ? null
+            : Number(filterString(String(formJson.WEATHERlongitude))),
+        latitude:
+          filterString(String(formJson.WEATHERlatitude)).trim() === ""
+            ? null
+            : Number(filterString(String(formJson.WEATHERlatitude))),
+        tempUnit: filterString(String(formJson.WEATHERtempUnit)) as
+          | "Fahrenheit"
+          | "Celsius",
+        speedUnit: filterString(String(formJson.WEATHERspeedUnit)) as
           | "km/h"
           | "m/s"
           | "kn"
-          | "mph"
+          | "mph",
+        country: filterString(String(formJson.WEATHERcountry)),
+        state: filterString(String(formJson.WEATHERstate)),
+        city: filterString(String(formJson.WEATHERcity))
       },
       outfitSuggestions: {
-        style: String(formJson.OUTFITstyle),
-        gender: String(formJson.OUTFITgender)
+        style: filterString(String(formJson.OUTFITstyle)),
+        gender: filterString(String(formJson.OUTFITgender))
       },
       settingsUpdated: true
     }
@@ -220,22 +234,55 @@ const SettingsForm = ({
           <input
             name="WEATHERlongitude"
             type="text"
-            required
-            defaultValue={settings.weather.longitude}
+            defaultValue={settings.weather.longitude || ""}
             className="border-solid border-black border-2"
           />
           <br />
           <br />
-          <label>Latitude:</label>
+          <label>Latitude: </label>
           <input
             name="WEATHERlatitude"
             type="text"
-            required
-            defaultValue={settings.weather.latitude}
+            defaultValue={settings.weather.latitude || ""}
             className="border-solid border-black border-2"
           ></input>
           <br></br>
-          <br />
+          <br></br>
+          <h2 className="text-sm">
+            Alternatively, if Latitude / Longitude is not specified, specify the
+            following (only works for N. America and not always accurate!):{" "}
+          </h2>
+          <h6 className="text-xs">
+            Latitude and Longitude will always be prioritized if specified{" "}
+          </h6>
+          <div className="bg-gray-400 rounded p-2">
+            <label>ISO Country Code: </label>
+            <input
+              name="WEATHERcountry"
+              type="text"
+              defaultValue={settings.weather.country}
+              className="border-solid border-black border-2"
+            ></input>
+            <br></br>
+            <label>Province / State Code: </label>
+            <input
+              name="WEATHERstate"
+              type="text"
+              defaultValue={settings.weather.state}
+              className="border-solid border-black border-2"
+            ></input>
+            <br></br>
+            <label>City: </label>
+            <input
+              name="WEATHERcity"
+              type="text"
+              defaultValue={settings.weather.city}
+              className="border-solid border-black border-2"
+            ></input>
+            <br></br>
+            <br />
+          </div>
+          <br></br>
           <label>Temperature Unit: </label>
           <select
             name="WEATHERtempUnit"
