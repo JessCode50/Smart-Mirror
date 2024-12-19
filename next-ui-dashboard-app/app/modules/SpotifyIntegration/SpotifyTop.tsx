@@ -2,8 +2,8 @@ import {
   SpotifyTokenStore,
   checkSpotifyTokenExpired
 } from "@/app/lib/spotifyDataTypes"
-import { redirect } from "next/navigation"
 import { SimplifiedArtist, Track } from "@spotify/web-api-ts-sdk"
+import { requestFromRefreshToken } from "@/app/lib/spotifyToken"
 
 const SpotifyTop = async ({
   spotifyStore
@@ -14,7 +14,7 @@ const SpotifyTop = async ({
 
   // Check token expiry
   if (checkSpotifyTokenExpired(spotifyStore)) {
-    redirect("/spotify_login")
+    spotifyStore = await requestFromRefreshToken(spotifyStore)
   }
 
   // Request Top Artists and Songs
