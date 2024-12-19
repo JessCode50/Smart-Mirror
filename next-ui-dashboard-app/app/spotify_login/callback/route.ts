@@ -7,7 +7,7 @@ import {
 import { redirect } from "next/navigation"
 import { updateSpotifyAccessToken } from "@/app/stores/settingsClient"
 
-const client_id = "ff8ff81c736941439e5a5ea1a89ffdea"
+const client_id = process.env.SPOTIFY_CLIENT_ID
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET
 export const dynamic = "force-dynamic"
 

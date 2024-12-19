@@ -35,13 +35,17 @@ export default async function Home() {
   let longitude = mirrorSettings.weather.longitude
   let latitude = mirrorSettings.weather.latitude
   // Will not always be accurate as the first search result is picked
-  if (longitude === null || latitude === null) {
+  if (
+    (longitude === null || latitude === null) &&
+    process.env.TRIMBLE_MAPS_API_KEY !== undefined &&
+    process.env.TRIMBLE_MAPS_API_KEY.trim() !== ""
+  ) {
     const country = mirrorSettings.weather.country
     const city = mirrorSettings.weather.city
     const state = mirrorSettings.weather.state
     const upperState = state.toUpperCase()
     const geoData = await fetch(
-      `https://singlesearch.alk.com/NA/api/search?authToken=386EF13A44DC7A43A0E284E85755B336&query=${city},${state},08540&countries=${country}&states=${upperState}`
+      `https://singlesearch.alk.com/NA/api/search?authToken=${process.env.TRIMBLE_MAPS_API_KEY}&query=${city},${state},08540&countries=${country}&states=${upperState}`
     )
 
     const geo = await geoData.json()

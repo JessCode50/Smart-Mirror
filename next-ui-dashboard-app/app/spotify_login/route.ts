@@ -10,7 +10,7 @@ function generateRandomString(length: number) {
   return result
 }
 
-const client_id = "ff8ff81c736941439e5a5ea1a89ffdea"
+const client_id = process.env.SPOTIFY_CLIENT_ID
 export async function GET(request: NextRequest) {
   const state = generateRandomString(16)
   const scope =

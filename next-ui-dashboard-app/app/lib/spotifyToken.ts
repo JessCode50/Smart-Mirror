@@ -6,7 +6,7 @@ import {
 } from "./spotifyDataTypes"
 import { updateSpotifyAccessToken } from "../stores/settingsClient"
 
-const client_id = "ff8ff81c736941439e5a5ea1a89ffdea"
+const client_id = process.env.SPOTIFY_CLIENT_ID
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET
 
 export async function requestFromRefreshToken(
