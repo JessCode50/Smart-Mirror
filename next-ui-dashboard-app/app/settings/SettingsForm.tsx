@@ -1,5 +1,5 @@
 "use client"
-import { FormEvent, useState } from "react"
+import { FormEvent } from "react"
 import { MirrorSettings } from "../lib/dbAccess"
 import { mdiSpotify } from "@mdi/js"
 import Icon from "@mdi/react"
