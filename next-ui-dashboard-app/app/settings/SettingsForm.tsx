@@ -14,9 +14,8 @@ const SettingsForm = ({
   spotifyLoggedIn: boolean
   userName: string | undefined
 }) => {
-  const originalSettings = JSON.parse(currentSettingsStr) as MirrorSettings
+  const settings = JSON.parse(currentSettingsStr) as MirrorSettings
   const router = useRouter()
-  const [settings, setSettings] = useState({ ...originalSettings })
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     // Prevent the browser from reloading the page
     e.preventDefault()
