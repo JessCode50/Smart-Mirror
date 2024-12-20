@@ -32,6 +32,9 @@ export const DEFAULT_SETTINGS: MirrorSettings = {
     excludeDomains: "",
     numberOfArticles: 3
   },
+  photos: {
+    category: "Wildlife"
+  },
   spotifyToken: null
 }
 

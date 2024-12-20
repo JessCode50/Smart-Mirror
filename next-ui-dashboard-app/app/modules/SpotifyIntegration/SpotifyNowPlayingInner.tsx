@@ -64,9 +64,6 @@ const SpotifyNowPlayingInner = ({
     return artistString
   }
   const artistString = getArtistsString(getSongData(songDataJSON).item.artists)
-  const albumArtAspectRatio =
-    getSongData(songDataJSON).item.album.images[0].width /
-    getSongData(songDataJSON).item.album.images[0].height
   return (
     <div>
       <h1 className="text-2xl">Now Playing: </h1> <br></br>
@@ -74,10 +71,10 @@ const SpotifyNowPlayingInner = ({
         {getSongData(songDataJSON).item.album.images[0].url ? (
           <Image
             src={getSongData(songDataJSON).item.album.images[0].url}
-            width={128}
-            height={128 / albumArtAspectRatio}
+            width={getSongData(songDataJSON).item.album.images[0].width}
+            height={getSongData(songDataJSON).item.album.images[0].height}
             alt="Album Cover"
-            className="rounded"
+            className="rounded max-w-[128px] max-h-[128px]"
           ></Image>
         ) : (
           ""

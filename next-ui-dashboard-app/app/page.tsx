@@ -107,7 +107,9 @@ export default async function Home() {
         <div className="flex-grow"></div>
         <div className="flex flex-col justify-end items-end pr-2 pb-3">
           <div className="mb-10">
-            <Photos></Photos>
+            <Photos
+              category={mirrorSettings.photos.category || "Wildlife"}
+            ></Photos>
           </div>
           <Clock></Clock>
         </div>

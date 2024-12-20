@@ -30,6 +30,9 @@ export interface MirrorSettings {
     excludeDomains: string
     numberOfArticles: number
   }
+  photos: {
+    category: "Wildlife" | "Landscape" | "Cityscape" | "Space"
+  }
 }
 
 export class DBAccess {

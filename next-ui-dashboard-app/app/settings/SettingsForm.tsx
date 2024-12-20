@@ -14,9 +14,6 @@ const SettingsForm = ({
   spotifyLoggedIn: boolean
   userName: string | undefined
 }) => {
-  function filterString(str: string) {
-    return str.replace(/[^a-zA-Z0-9,.-]/gi, "")
-  }
   const originalSettings = JSON.parse(currentSettingsStr) as MirrorSettings
   const router = useRouter()
   const [settings, setSettings] = useState({ ...originalSettings })
@@ -30,47 +27,9 @@ const SettingsForm = ({
     //hardcode which setting goes to which api
     // Or you can work with it as a plain object:
     const formJson = Object.fromEntries(formData.entries())
-    const newSettings: MirrorSettings = {
-      ...settings,
-      news: {
-        keywords: filterString(String(formJson.NEWSkeywords)),
-        countries: filterString(String(formJson.NEWScountries)),
-        categories: filterString(String(formJson.NEWScategories)),
-        languages: filterString(String(formJson.NEWSlanguages)),
-        domains: filterString(String(formJson.NEWSdomains)),
-        excludeDomains: filterString(String(formJson.NEWSexcludeDomains)),
-        numberOfArticles: Number(formJson.NEWSnumberOfArticles)
-      },
-      weather: {
-        longitude:
-          filterString(String(formJson.WEATHERlongitude)).trim() === ""
-            ? null
-            : Number(filterString(String(formJson.WEATHERlongitude))),
-        latitude:
-          filterString(String(formJson.WEATHERlatitude)).trim() === ""
-            ? null
-            : Number(filterString(String(formJson.WEATHERlatitude))),
-        tempUnit: filterString(String(formJson.WEATHERtempUnit)) as
-          | "Fahrenheit"
-          | "Celsius",
-        speedUnit: filterString(String(formJson.WEATHERspeedUnit)) as
-          | "km/h"
-          | "m/s"
-          | "kn"
-          | "mph",
-        country: filterString(String(formJson.WEATHERcountry)),
-        state: filterString(String(formJson.WEATHERstate)),
-        city: filterString(String(formJson.WEATHERcity))
-      },
-      outfitSuggestions: {
-        style: filterString(String(formJson.OUTFITstyle)),
-        gender: filterString(String(formJson.OUTFITgender))
-      },
-      settingsUpdated: true
-    }
-    delete newSettings._id
-    setSettings(newSettings)
-    writeSettings(JSON.stringify(newSettings))
+    writeSettings(JSON.stringify(formJson)).then(() => {
+      window.location.reload()
+    })
   }
   return (
     <form
@@ -189,43 +148,6 @@ const SettingsForm = ({
           </label>
           <br></br>
           <br></br>
-          {/* The following are READ ONLY.<br></br>
-          <label>
-            Featured Image:{" "}
-            <input
-              name="image"
-              type="number"
-              readOnly
-              defaultValue="0"
-              className="border-solid border-black border-2"
-            />{" "}
-          </label>
-          <br></br>
-          <br></br>
-          <label>
-            Video:{" "}
-            <input
-              name="video"
-              type="number"
-              readOnly
-              defaultValue="0"
-              className="border-solid border-black border-2"
-            />{" "}
-          </label>
-          <br></br>
-          <br></br>
-          <label>
-            Remove Duplicates:{" "}
-            <input
-              name="removeduplicate"
-              type="number"
-              readOnly
-              defaultValue="1"
-              className="border-solid border-black border-2"
-            />{" "}
-          </label>
-          <br></br>
-          <br></br> */}
         </div>
 
         <div>
@@ -327,6 +249,20 @@ const SettingsForm = ({
             defaultValue={settings.outfitSuggestions.gender}
             className="border-solid border-black border-2"
           ></input>
+        </div>
+        <div>
+          <h1 className="text-2xl">PHOTO SETTINGS</h1>
+          <label>Category: </label>
+          <select
+            name="PHOTOcategory"
+            id="photoCat"
+            defaultValue={settings.photos.category}
+          >
+            <option value="Wildlife">Wildlife</option>
+            <option value="Landscape">Landscape</option>
+            <option value="Cityscape">Cityscape</option>
+            <option value="Space">Space</option>
+          </select>
         </div>
         <div>
           <h1 className="text-2xl">SPOTIFY SETTINGS</h1>
